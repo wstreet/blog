@@ -14,7 +14,3 @@ deploy:
   on:
     branch: gh-pages
 
-
-branches:
-  only:
-    - master
