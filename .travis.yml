@@ -1,16 +1,14 @@
 language: node_js
-node_js:
-  - "7"
+node_js: stable
 
-#: Build Lifecycle Start
-install:
-  - npm install
+install: npm install
 
-script:
-  - hexo g
+script: hexo g
 
 
 deploy: 
   provider: pages
   github-token: $GITHUB_TOKEN
-  local-dir: ./public/
+  local-dir: public
+  on:
+    branch: master
