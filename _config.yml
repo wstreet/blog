@@ -79,5 +79,5 @@ theme: landscape
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:wstreet/wstreet.github.io.git
+  repo: https://gh_token@github.com/wstreet/wstreet.github.io.git
   branch: gh-pages
