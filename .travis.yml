@@ -1,6 +1,10 @@
 language: node_js
 node_js: stable
 
+cache:
+    directories:
+    - node_modules
+
 install: npm install
 
 # 编译
@@ -12,5 +16,5 @@ deploy:
   github-token: $GITHUB_TOKEN
   local-dir: public
   on:
-    branch: gh-pages
+    branch: master
 
