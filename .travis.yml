@@ -3,14 +3,18 @@ node_js: stable
 
 install: npm install
 
-after_install: rm package-lock.json
-
+# 编译
 script: hexo g
 
-
+# 部署
 deploy: 
   provider: pages
   github-token: $GITHUB_TOKEN
   local-dir: public
   on:
-    branch: master
+    branch: gh-pages
+
+
+branches:
+  only:
+    - master
