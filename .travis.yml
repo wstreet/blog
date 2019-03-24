@@ -15,12 +15,6 @@ script:
 
 # 部署
 after_script:
+  - git config user.name "travis deploy"
+  - git config user.email "iamdbd@163.com"
   - hexo deploy
-
-# 部署
-# deploy:
-#   provider: pages
-#   github-token: $GITHUB_TOKEN
-#   local-dir: public
-#   on:
-#     branch: master
