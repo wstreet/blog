@@ -73,7 +73,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+<<<<<<< HEAD
 theme: vexo
+=======
+theme: landscape
+>>>>>>> 3301d14510d6fe80b293ed53a0409d8a2fb1f5f8
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
