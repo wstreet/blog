@@ -18,5 +18,5 @@ after_script:
   - git config user.name "travis deploy"
   - git config user.email "iamdbd@163.com"
   #使用travisCI中配置的token替换掉_config.yml中对应的占位符
-  - sed -i "s/gh_token/$GH_TOKEN/g" _config.yml
+  - sed -i "s/gh_token/$GITHUB_TOKEN/g" _config.yml
   - hexo deploy
