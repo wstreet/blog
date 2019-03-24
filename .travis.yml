@@ -3,6 +3,8 @@ node_js: stable
 
 install: npm install
 
+after_install: rm package-lock.json
+
 script: hexo g
 
 
