@@ -5,10 +5,6 @@ cache:
     directories:
     - node_modules
 
-# 只允许build master分支
-branches:
-  only: master
-
 
 install: npm install
 
@@ -17,9 +13,9 @@ script:
   - hexo clean
   - hexo generate
 
-  # 部署
-  after_script:
-    - hexo deploy
+# 部署
+after_script:
+  - hexo deploy
 
 # 部署
 # deploy:
