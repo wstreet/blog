@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 步行街
+title: 步行街的Blog
 subtitle:
 description:
 keywords:
@@ -13,8 +13,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /
+url: https://wstreet.github.io/blog
+root: /blog
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
