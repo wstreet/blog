@@ -14,7 +14,8 @@ menu:
     url: /archives
   tags:
     url: /tags
-  categories:
+  th-list:
+    text: Categories
     url: /categories
   github:
     url: https://github.com/wstreet
