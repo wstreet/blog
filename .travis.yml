@@ -6,15 +6,28 @@ cache:
     - node_modules
 
 
-install: npm install
+install:
+  - npm install
 
 # 编译
 script:
-  # - hexo clean
   - hexo generate
 
+
 # 部署
-after_script:
-  #使用travisCI中配置的token替换掉_config.yml中对应的占位符
-  - sed -i "s/gh_token/$GITHUB_TOKEN/g" _config.yml
-  - hexo deploy
+deploy:
+  provider: pages
+  skip-cleanup: true
+  local_dir: public
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: gh_pages
+
+
+
+# 部署
+# after_script:
+#   #使用travisCI中配置的token替换掉_config.yml中对应的占位符
+#   - sed -i "s/gh_token/$GITHUB_TOKEN/g" _config.yml
+#   - hexo deploy
