@@ -121,6 +121,7 @@ Function.prototype.myBind = function(context) {
 
 ##### 构造函数效果的模拟实现
 >模拟完以上功能还有一个最难的部分没有实现：一个绑定函数也能使用`new`操作符创建对象
+
 ```
 Function.prototype.myBind = function(context) {
     if (typeof this !== 'function') {
