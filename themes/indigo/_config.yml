@@ -17,6 +17,9 @@ menu:
   th-list:
     text: Categories
     url: /categories
+  pinterest-p:
+    text: Javascript进阶
+    url: /javascript-pro
   github:
     url: https://github.com/wstreet
     target: _blank
