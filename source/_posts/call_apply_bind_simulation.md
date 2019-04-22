@@ -3,7 +3,7 @@ title: call、apply、bind模拟实现
 date: 2019-04-01 19:06:47
 tags:
   - JavaScript
-categories: JavaScript
+categories: JavaScript进阶
 ---
 ### call、apply、bind
 #### 区别：
