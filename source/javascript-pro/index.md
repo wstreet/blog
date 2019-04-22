@@ -18,7 +18,7 @@ date: 2019-04-21 00:56:23
 3. **值类型和引用类型**
 4. **隐式, 显式, 名义和鸭子类型**
 5. **== 与 ===, typeof 与 instanceof**
-6. **[call、apply和bind的模拟实现](https://wstreet.github.io/blog/2019/04/23/call_apply_bind_simulation)**
+6. **[call、apply和bind的模拟实现](https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation)**
 7. **new的模拟实现**
 8. **函数作用域, 块级作用域和词法作用域**
 9.  **闭包**
