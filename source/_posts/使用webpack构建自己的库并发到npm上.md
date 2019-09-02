@@ -1,7 +1,9 @@
 ---
 title: 使用webpack构建自己的库并发到npm上
 date: 2019-08-31 15:14:25
-tags: webpack npm
+tags: 
+ - webpack
+ - npm
 categories: webpack
 ---
 
