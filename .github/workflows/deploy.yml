@@ -1,18 +1,13 @@
 name: Deploy
 
 on: push
-  branches: 
-    - master
-
+  branches: master
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [8.x, 10.x, 12.x]
-
     steps:
     - uses: actions/checkout@master
     - name: Use Node.js ${{ matrix.node-version }}
