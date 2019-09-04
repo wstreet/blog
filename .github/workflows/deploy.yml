@@ -14,9 +14,8 @@ jobs:
         node-version: '10.x'
     - name: npm install, hexo generate
       uses: actions/setup-node@v1
-    - run: npm install
-    - run: hexo generate
-    - name: deploy site to gh-pages branch
-      uses: bookshiyi/action-hexo@master
+      run: npm install && hexo generate
+    - name: GitHub Action for hexo
+      uses: heowc/action-hexo@1.0.2
       env:
         CI: true
