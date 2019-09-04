@@ -12,9 +12,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - name: npm install, hexo generate
-      uses: actions/setup-node@v1
-      run: npm install && hexo generate
+    - name: Install Dependencies
+      run: npm install
+    - name: Hexo generate
+      run: hexo generate
     - name: GitHub Action for hexo
       uses: heowc/action-hexo@1.0.2
       env:
