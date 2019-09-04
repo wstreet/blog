@@ -20,6 +20,6 @@ jobs:
     - run: npm install
     - run: hexo generate
     - name: deploy site to gh-pages branch
-      user: bookshiyi/action-hexo@master
+      uses: bookshiyi/action-hexo@master
       env:
         CI: true
