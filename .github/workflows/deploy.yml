@@ -14,6 +14,8 @@ jobs:
           node-version: '10.x'
       - name: Install Dependencies
         run: npm install
+      - name: Install hexo-cli -g
+        run: npm install hexo-cli -g
       - name: Hexo generate
         run: hexo generate
       - name: GitHub Action for hexo
