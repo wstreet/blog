@@ -7,16 +7,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - name: Install Dependencies
-      run: npm install
-    - name: Hexo generate
-      run: hexo generate
-    - name: GitHub Action for hexo
-      uses: heowc/action-hexo@1.0.2
-      env:
-        CI: true
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Install Dependencies
+        run: npm install
+      - name: Hexo generate
+        run: hexo generate
+      - name: GitHub Action for hexo
+        uses: heowc/action-hexo@1.0.2
