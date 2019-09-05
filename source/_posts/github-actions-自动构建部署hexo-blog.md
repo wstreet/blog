@@ -10,28 +10,24 @@ categories: CI/CD
 ## 配置文件
 
 ```yml
-name: Deploy
+name: Deploy to gh-pages branch
 on:
   push:
     branches: master
 
 jobs:
-  build:
+  Build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-      - name: Install Dependencies
-        run: npm install
-      - name: Install hexo-cli -g
-        run: npm install hexo-cli -g
-      - name: Hexo generate
-        run: hexo generate
-      - name: GitHub Action for hexo
-        uses: heowc/action-hexo@1.0.2
+      - name: Checkout
+        uses: actions/checkout@master
 
+      - name: Deploy...
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: public
+          BUILD_SCRIPT: npm install && npm install hexo-cli -g && hexo generate
 
 ```
