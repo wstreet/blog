@@ -50,7 +50,7 @@ categories_title: Categories
 
 # 文章截断
 excerpt_render: false
-excerpt_length: 200
+excerpt_length: 300
 excerpt_link: 阅读全文...
 mathjax: false
 archive_yearly: true
@@ -85,7 +85,7 @@ postMessage: 本文地址：<a href="<%- url_for(page.path).replace(/index\.html
 cnzz: false
 
 # 百度统计，如要开启，改为你的 key
-baidu_tongji: false
+baidu_tongji: 3370aa9648467f23f9c0c941e753869b
 
 # 腾讯分析，如要开启，输入站点id
 tajs: false
