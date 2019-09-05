@@ -4,7 +4,7 @@ on:
     branches: master
 
 jobs:
-  Build And Deploy:
+  Build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
