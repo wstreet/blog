@@ -220,3 +220,8 @@ class Cat extends Animal {
 }
 typeof Cat // function
 ```
+
+8、参考文章
+
+* [一篇文章理解JS继承——原型链/构造函数/组合/原型式/寄生式/寄生组合/Class extends](https://segmentfault.com/a/1190000015727237#item-2-7)
+* [JavaScript常用八种继承方案](https://juejin.im/post/5bcb2e295188255c55472db0)
