@@ -35,7 +35,7 @@ date: 2019-04-21 00:56:23
 20. **Promise**
 21. **DOM 树和渲染过程**
 22. **new 与构造函数, instanceof 与实例**
-23. **原型继承与原型链**
+23. **[JavaScript继承]()**
 24. **Object.create 和 Object.assign**
 25. **工厂函数和类**
 26. **设计模式**

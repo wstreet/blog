@@ -1,8 +1,8 @@
 ---
 title: JavaScript继承
 date: 2019-12-22 15:53:39
-tags:
-categories:
+tags: JavaScript
+categories: JavaScript进阶
 ---
 
 ## 0、原型和原型链
