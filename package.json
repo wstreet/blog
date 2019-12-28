@@ -5,6 +5,9 @@
   "hexo": {
     "version": "3.9.0"
   },
+  "scripts": {
+    "cname": "./scripts/cname.sh"
+  },
   "dependencies": {
     "hexo": "^3.8.0",
     "hexo-browsersync": "^0.3.0",
