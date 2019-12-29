@@ -102,7 +102,8 @@ Cat.prototype = animal
 Cat.prototype.constructor = Cat
 const cat = new Cat('miao', 4)
 ```
-
+![](https://cdn.nlark.com/yuque/0/2019/png/211977/1576769280383-2b761a5f-0fb2-47c0-85ca-5e2cf49f37f7.png?x-oss-process=image/resize,w_604)
+![](https://cdn.nlark.com/yuque/0/2019/png/211977/1576769449826-b971df11-c280-47c3-97d9-165d19d81ebd.png)
 通过上述代码发现，实例cat和其原型cat.__proto__（animal）上都有父类（Animal）实例该有的属性，只不过cat上的属性会屏蔽其原型上的同名属性和方法
 
 > 总结：将原型链继承和构造函数继承结合起来
