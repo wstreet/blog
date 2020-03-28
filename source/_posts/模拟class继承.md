@@ -1,8 +1,8 @@
 ---
 title: 模拟class继承
 date: 2019-12-28 17:39:53
-tags: Javascript
-categories: Javascript进阶
+tags: JavaScript
+categories: JavaScript进阶
 ---
 
 
