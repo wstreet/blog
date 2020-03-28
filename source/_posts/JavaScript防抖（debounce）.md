@@ -2,7 +2,7 @@
 title: JavaScript防抖（debounce）
 date: 2019-04-07 12:28:44
 tags: JavaScript
-categories: JavaScript专题系列
+categories: JavaScript进阶
 ---
 ## 前言
 在日常的开发中，经常会遇到事件频繁触发，比如：

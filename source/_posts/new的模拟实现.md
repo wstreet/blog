@@ -1,8 +1,8 @@
 ---
 title: new的模拟实现
 date: 2020-01-02 21:22:35
-tags:
-categories:
+tags: Javascript
+categories: Javascript进阶
 ---
 
 ```

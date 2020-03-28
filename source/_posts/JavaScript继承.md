@@ -6,7 +6,7 @@ categories: JavaScript进阶
 ---
 
 ## 0、原型和原型链
-没个构造函数都会有一个prototype属性，指向它的原型对象，原型对象有一个constructor属性，指向构造函数，实例对象会有一个内部属性__proto__指向构造函数的原型对象，原型链就是通过__proto__一形成的一个链接，链接的顶部是Object.prototype，Object.prototype的__proto__属性指向null
+每个构造函数都会有一个prototype属性，指向它的原型对象，原型对象有一个constructor属性，指向构造函数，实例对象会有一个内部属性__proto__指向构造函数的原型对象，原型链就是通过__proto__一形成的一个链接，链接的顶部是Object.prototype，Object.prototype的__proto__属性指向null
 ```
 function Animal(name) {
   this.name = name
