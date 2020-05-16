@@ -23,6 +23,6 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: dist
+          FOLDER: public
           BUILD_SCRIPT: npm install && npm install hexo-cli -g && hexo generate
 ```
