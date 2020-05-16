@@ -24,5 +24,5 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: dist
-          BUILD_SCRIPT: npm install && npm run build
+          BUILD_SCRIPT: npm install && npm install hexo-cli -g && hexo generate
 ```
