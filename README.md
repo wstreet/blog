@@ -19,7 +19,9 @@ jobs:
         uses: actions/checkout@master
 
       - name: Install Dependencies
-        run: npm install && npm install hexo-cli -g
+        run: |
+          npm install
+          npm install hexo-cli -g
 
       - name: Build And Deploy...
         uses: JamesIves/github-pages-deploy-action@master
@@ -28,6 +30,7 @@ jobs:
           BRANCH: gh-pages
           FOLDER: public
           BUILD_SCRIPT:  hexo generate
+
 
 
 ```
