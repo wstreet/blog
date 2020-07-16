@@ -18,5 +18,19 @@ lazyScripts.push('//s95.cnzz.com/z_stat.php?id=<%-theme.cnzz %>&web_id=<%-theme.
 <% if (theme.visit_counter) { %>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <% } %>
+<script src="https://unpkg.com/@wstreet7/watermark@latest/lib/watermark.min.js"></script>
+<script>
+    if (window.WaterMark) {
+        new window.WaterMark({
+            text: '@wstreet7',
+            height: 80,
+            width: 120,
+            fontWeight: 200,
+            fillStyle: '#ccc',
+            opacity: 0.5
+        })
+    }
+    
+</script>
 
 <%- partial('plugins/dynamic-title') %>
