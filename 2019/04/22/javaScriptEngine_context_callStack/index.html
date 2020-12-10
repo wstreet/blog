@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?3370aa9648467f23f9c0c941e753869b"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Javascript引擎、执行上下文和调用栈 | 步行街的Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JavaScript">
+    <meta name="description" content="概览本文旨在记录自己学习V8引擎、执行上下文和调用堆栈是什么，以及他们之间的关系，通过阅读本文，你将会了解JavaScript是如何运行的，在项目中也会编写更好的程序。如有错误请在评论中指出。 V8由 Google 构建的 V8 引擎是开源的，用 C ++ 编写。 此引擎被用在 Google Chrome 中。 与其他引擎不同的是，V8 也被用于流行的 Node.js 中。 V8引擎是一个比较流行">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript引擎、执行上下文和调用栈">
+<meta property="og:url" content="https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="概览本文旨在记录自己学习V8引擎、执行上下文和调用堆栈是什么，以及他们之间的关系，通过阅读本文，你将会了解JavaScript是如何运行的，在项目中也会编写更好的程序。如有错误请在评论中指出。 V8由 Google 构建的 V8 引擎是开源的，用 C ++ 编写。 此引擎被用在 Google Chrome 中。 与其他引擎不同的是，V8 也被用于流行的 Node.js 中。 V8引擎是一个比较流行">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2askmgg4bj30sg0lcq3z.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2btjlesiuj30nh0budfz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2btw1wq9gj306q074dfm.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bu05gy5mj30ai07hdfn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bub8sgc0j30dj06p0sk.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bue4eaz8j30il07xjr9.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bug49bhej30mm07t747.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2buka7hz5j30ps08mdfr.jpg">
+<meta property="og:updated_time" content="2020-12-10T12:33:47.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript引擎、执行上下文和调用栈">
+<meta name="twitter:description" content="概览本文旨在记录自己学习V8引擎、执行上下文和调用堆栈是什么，以及他们之间的关系，通过阅读本文，你将会了解JavaScript是如何运行的，在项目中也会编写更好的程序。如有错误请在评论中指出。 V8由 Google 构建的 V8 引擎是开源的，用 C ++ 编写。 此引擎被用在 Google Chrome 中。 与其他引擎不同的是，V8 也被用于流行的 Node.js 中。 V8引擎是一个比较流行">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006NiFm7ly1g2askmgg4bj30sg0lcq3z.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="步行街的Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars1.githubusercontent.com/u/20897673">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">wstreet</h5>
+          <a href="mailto:wstreet7@outlook.com" title="wstreet7@outlook.com" class="mail">wstreet7@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/javascript-pro"  >
+                <i class="icon icon-lg icon-pinterest-p"></i>
+                Javascript进阶
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/wstreet" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Javascript引擎、执行上下文和调用栈</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Javascript引擎、执行上下文和调用栈</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-22T01:34:00.000Z" itemprop="datePublished" class="page-time">
+  2019-04-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript进阶/">JavaScript进阶</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概览"><span class="post-toc-number">1.</span> <span class="post-toc-text">概览</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#V8"><span class="post-toc-number">2.</span> <span class="post-toc-text">V8</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#执行上下文（Execution-Context）"><span class="post-toc-number">3.</span> <span class="post-toc-text">执行上下文（Execution Context）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#call-stack（调用堆栈）"><span class="post-toc-number">4.</span> <span class="post-toc-text">call stack（调用堆栈）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图解三者关系"><span class="post-toc-number">5.</span> <span class="post-toc-text">图解三者关系</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码示例"><span class="post-toc-number">6.</span> <span class="post-toc-text">代码示例</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-javaScriptEngine_context_callStack"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Javascript引擎、执行上下文和调用栈</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-22 01:34:00" datetime="2019-04-22T01:34:00.000Z"  itemprop="datePublished">2019-04-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript进阶/">JavaScript进阶</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>本文旨在记录自己学习V8引擎、执行上下文和调用堆栈是什么，以及他们之间的关系，通过阅读本文，你将会了解JavaScript是如何运行的，在项目中也会编写更好的程序。如有错误请在评论中指出。</p>
+<h2 id="V8"><a href="#V8" class="headerlink" title="V8"></a>V8</h2><p>由 Google 构建的 V8 引擎是开源的，用 C ++ 编写。 此引擎被用在 Google Chrome 中。 与其他引擎不同的是，V8 也被用于流行的 Node.js 中。</p>
+<p>V8引擎是一个比较流行的JavaScript解释器，它主要包含两个重要的组件：</p>
+<ul>
+<li>Memory Heap （内存堆），内存分配的地方</li>
+<li>Call Stack （调用堆栈），码执行时栈帧存放的位置</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2askmgg4bj30sg0lcq3z.jpg" alt="V8" title>
+                </div>
+                <div class="image-caption">V8</div>
+            </figure>
+<h2 id="执行上下文（Execution-Context）"><a href="#执行上下文（Execution-Context）" class="headerlink" title="执行上下文（Execution Context）"></a>执行上下文（Execution Context）</h2><p>引擎在加载完代码后会解析代码，创建一个执行环境，形成一个作用域，这个执行环境便是执行上下文。<br>执行上下文分为3中：</p>
+<ul>
+<li>全局执行上下文（全局作用域）</li>
+<li>函数内部执行上下文（局部作用域）</li>
+<li>eval,不推荐使用</li>
+</ul>
+<h2 id="call-stack（调用堆栈）"><a href="#call-stack（调用堆栈）" class="headerlink" title="call stack（调用堆栈）"></a>call stack（调用堆栈）</h2><p>在当前执行环境中遇到函数时，会将函数压入一个栈（一种数据结构）中并执行函数，若函数中还有函数调用，会继续将遇到的函数压入栈中并执行，函数执行完后会将其弹出栈</p>
+<h2 id="图解三者关系"><a href="#图解三者关系" class="headerlink" title="图解三者关系"></a>图解三者关系</h2><blockquote>
+<p>本文只介绍引擎、执行上下文、调用堆栈之间的关系，关于Event Loop会在后续文章中介绍</p>
+</blockquote>
+<p>如上图所展示一样:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2btjlesiuj30nh0budfz.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<ol>
+<li>引擎在加载完代码后，创建全局执行上下文</li>
+<li>解析代码，在代码中找到函数申明和变量定义语句，将变量和函数存储在堆内存中</li>
+<li>执行代码，如果遇到函数将其压入call stack中并执行函数first()</li>
+<li>每当函数执行时，又会创建一个局部执行上下文（局部作用域）</li>
+<li>如果再次遇到函数，重复2-4步骤</li>
+<li>函数执行完后，此函数将被从调用栈中弹出</li>
+</ol>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">console.log(a)</span><br><span class="line"></span><br><span class="line">function say() &#123;</span><br><span class="line">  console.log(&apos;say&apos;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = &apos;aa&apos;;</span><br><span class="line">var b = &apos;bb&apos;;</span><br><span class="line"></span><br><span class="line">say()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>js引擎加载完这段代码，创建一个全局执行上下文</li>
+<li><p>解析代码，找到定义的变量和申明的函数，将其存入堆内存中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Memory Heap</span><br><span class="line"></span><br><span class="line">a: undefined</span><br><span class="line">b: undefined</span><br><span class="line">say: function() &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行代码，首先将<code>console.log(a)</code>压入栈中并执行，结果为<code>undefined</code>。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2btw1wq9gj306q074dfm.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+<li><p>执行完后将其弹出栈</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bu05gy5mj30ai07hdfn.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+<li><p>函数say引用和变量a,b赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Memory Heap</span><br><span class="line"></span><br><span class="line">a: &apos;aa&apos;</span><br><span class="line">b: &apos;bb&apos;</span><br><span class="line">say: function() &#123;console.log(&apos;say&apos;)&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将<code>say()</code>压入call stack中并执行，这个过程中又会创建一个局部作用域</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bub8sgc0j30dj06p0sk.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+<li><p>执行<code>say()</code>中的代码时遇到<code>console.log(&#39;say&#39;)</code>，将其压入call stack中</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bue4eaz8j30il07xjr9.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+<li><p>执行完<code>console.log(&#39;say&#39;)</code>将其弹出栈，继续执行<code>say()</code>中剩余的代码</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2bug49bhej30mm07t747.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+<li><p>执行完<code>say()</code>将其弹出栈，继续执行全局执行上下文中剩余的代码，直至执行完</p>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/006NiFm7ly1g2buka7hz5j30ps08mdfr.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<ul>
+<li>关闭浏览器，销毁全局执行上下文</li>
+</ul>
+<p>本文结束，希望内容对正在浏览的你有所帮助，如有错误，希望指出。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.cnblogs.com/jiebba/p/9897287.html" target="_blank" rel="noopener">js的基础(平民理解的执行上下文/调用堆栈/内存栈/值类型/引用类型)</a></li>
+<li><a href="https://www.oschina.net/translate/how-does-javascript-actually-work-part-1" target="_blank" rel="noopener">解读 JavaScript 之引擎、运行时和堆栈调用</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-12-10T12:33:47.553Z" itemprop="dateUpdated">2020-12-10 12:33:47</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/2019/04/22/javaScriptEngine_context_callStack/" target="_blank" rel="external">https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://wstreet.github.io/blog">
+            <img src="https://avatars1.githubusercontent.com/u/20897673" alt="wstreet">
+            wstreet
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/&title=《Javascript引擎、执行上下文和调用栈》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/&title=《Javascript引擎、执行上下文和调用栈》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Javascript引擎、执行上下文和调用栈》 — 步行街的Blog&url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/08/31/使用webpack构建自己的库并发到npm上/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">使用webpack构建自己的库并发到npm上</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/07/JavaScript防抖（debounce）/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JavaScript防抖（debounce）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a9c85d02310f60c6f17b',
+          clientSecret: '93d6e714db189defbb4a268a0e470ecd2d816692',
+          repo: 'blog-gitment',
+          owner: 'wstreet',
+          admin: ['wstreet'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>wstreet &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/&title=《Javascript引擎、执行上下文和调用栈》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/&title=《Javascript引擎、执行上下文和调用栈》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Javascript引擎、执行上下文和调用栈》 — 步行街的Blog&url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://unpkg.com/@wstreet7/watermark@latest/lib/watermark.min.js"></script>
+<script>
+    if (window.WaterMark) {
+        new window.WaterMark({
+            text: '@wstreet7',
+            height: 80,
+            width: 120,
+            fontWeight: 200,
+            fillStyle: '#ccc',
+            opacity: 0.5
+        })
+    }
+    
+</script>
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

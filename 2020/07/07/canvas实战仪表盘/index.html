@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?3370aa9648467f23f9c0c941e753869b"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>canvas实战仪表盘 | 步行街的Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="canvas">
+    <meta name="description" content="完整代码可视化学习                                                                                             GIF 2020-5-30 13-06-01.gif             有动画效果123456789101112131415161718192021222324252627282930313">
+<meta name="keywords" content="canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="canvas实战仪表盘">
+<meta property="og:url" content="https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="完整代码可视化学习                                                                                             GIF 2020-5-30 13-06-01.gif             有动画效果123456789101112131415161718192021222324252627282930313">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/gif/211977/1590815221568-be0220ca-71f2-4bfa-9880-c83180259e27.gif#align=left&display=inline&height=142&margin=%5Bobject%20Object%5D&name=GIF%202020-5-30%2013-06-01.gif&originHeight=381&originWidth=476&size=124070&status=done&style=none&width=177">
+<meta property="og:updated_time" content="2020-12-10T12:33:47.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="canvas实战仪表盘">
+<meta name="twitter:description" content="完整代码可视化学习                                                                                             GIF 2020-5-30 13-06-01.gif             有动画效果123456789101112131415161718192021222324252627282930313">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/gif/211977/1590815221568-be0220ca-71f2-4bfa-9880-c83180259e27.gif#align=left&display=inline&height=142&margin=%5Bobject%20Object%5D&name=GIF%202020-5-30%2013-06-01.gif&originHeight=381&originWidth=476&size=124070&status=done&style=none&width=177">
+    
+        <link rel="alternate" type="application/atom+xml" title="步行街的Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars1.githubusercontent.com/u/20897673">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">wstreet</h5>
+          <a href="mailto:wstreet7@outlook.com" title="wstreet7@outlook.com" class="mail">wstreet7@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/javascript-pro"  >
+                <i class="icon icon-lg icon-pinterest-p"></i>
+                Javascript进阶
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/wstreet" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">canvas实战仪表盘</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">canvas实战仪表盘</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-07T08:54:23.000Z" itemprop="datePublished" class="page-time">
+  2020-07-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/canvas/">canvas</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-canvas实战仪表盘"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">canvas实战仪表盘</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-07 08:54:23" datetime="2020-07-07T08:54:23.000Z"  itemprop="datePublished">2020-07-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/canvas/">canvas</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://github.com/wstreet/canvas/blob/master/dashboard/index.html" target="_blank" rel="noopener">完整代码</a><br><br><a href="https://www.yuque.com/streetex/fbqzli" target="_blank" rel="noopener">可视化学习</a><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.nlark.com/yuque/0/2020/gif/211977/1590815221568-be0220ca-71f2-4bfa-9880-c83180259e27.gif#align=left&display=inline&height=142&margin=%5Bobject%20Object%5D&name=GIF%202020-5-30%2013-06-01.gif&originHeight=381&originWidth=476&size=124070&status=done&style=none&width=177" alt="GIF 2020-5-30 13-06-01.gif" title>
+                </div>
+                <div class="image-caption">GIF 2020-5-30 13-06-01.gif</div>
+            </figure><br><br>有动画效果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=<span class="string">"canvas"</span> height=<span class="string">"400"</span> width=<span class="string">"400"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">const</span> canvas = <span class="built_in">document</span>.querySelector(<span class="string">'#canvas'</span>)</span><br><span class="line">    <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> initValue = <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> value = <span class="number">91</span> <span class="comment">// 钱多的程度 0-100</span></span><br><span class="line">    <span class="keyword">const</span> valueText = getValueText(value)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修正角度</span></span><br><span class="line">    <span class="keyword">const</span> updateAngle = <span class="number">135</span> / <span class="number">180</span> * <span class="built_in">Math</span>.PI</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getValueText</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (value &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'太穷了'</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value &lt;= <span class="number">50</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'钱很少'</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value &lt;= <span class="number">70</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'钱不多'</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value &lt;= <span class="number">90</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'一点点'</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value &lt;= <span class="number">100</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'首富'</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'成仙了'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getAngle</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (value &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            value = <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (value &gt; <span class="number">100</span>) &#123;</span><br><span class="line">            value = <span class="number">100</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> angle = value / <span class="number">100</span> * <span class="number">270</span> / <span class="number">180</span> * <span class="built_in">Math</span>.PI</span><br><span class="line">        <span class="keyword">return</span> angle</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> requestAnimationFrame = <span class="built_in">window</span>.requestAnimationFrame</span><br><span class="line">        || <span class="built_in">window</span>.webkitRequestAnimationFrame</span><br><span class="line">        || <span class="built_in">window</span>.mozRequestAnimationFrame</span><br><span class="line">        || <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123; setTimeout(fn, <span class="number">16.7</span>) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化位置</span></span><br><span class="line">    ctx.translate(<span class="number">200</span>, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">draw</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (initValue &lt; value) &#123;</span><br><span class="line">            initValue += <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算旋转角度</span></span><br><span class="line">        <span class="keyword">const</span> angle = getAngle(initValue)</span><br><span class="line"></span><br><span class="line">        ctx.clearRect(-canvas.width / <span class="number">2</span>, -canvas.width / <span class="number">2</span>, canvas.width, canvas.height)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存初始样式</span></span><br><span class="line">        ctx.save()</span><br><span class="line"></span><br><span class="line">        ctx.rotate(updateAngle)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第二个环</span></span><br><span class="line">        ctx.strokeStyle = <span class="string">'#f5f9fc'</span></span><br><span class="line">        ctx.lineWidth = <span class="number">40</span></span><br><span class="line">        ctx.lineCap = <span class="string">'butt'</span></span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">270</span> / <span class="number">180</span> * <span class="built_in">Math</span>.PI)</span><br><span class="line">        ctx.stroke()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 内环</span></span><br><span class="line">        ctx.fillStyle = <span class="string">'#feffff'</span></span><br><span class="line">        ctx.shadowOffsetX = <span class="number">0</span>;</span><br><span class="line">        ctx.shadowOffsetY = <span class="number">0</span>;</span><br><span class="line">        ctx.shadowBlur = <span class="number">10</span>;</span><br><span class="line">        ctx.shadowColor = <span class="string">"#eceef2"</span>;</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">40</span>, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>)</span><br><span class="line">        ctx.fill()</span><br><span class="line">        ctx.rotate(-updateAngle)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// valueText</span></span><br><span class="line">        ctx.font = <span class="string">'12px serif'</span>;</span><br><span class="line">        ctx.fillStyle = <span class="string">'#1f2348'</span></span><br><span class="line">        ctx.fillText(valueText, <span class="number">-12</span>, <span class="number">16</span>)</span><br><span class="line">        ctx.save()</span><br><span class="line"></span><br><span class="line">        ctx.rotate(updateAngle)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 外环 加动画</span></span><br><span class="line">        <span class="keyword">const</span> lineargradient = ctx.createLinearGradient(<span class="number">100</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">100</span>);</span><br><span class="line">        lineargradient.addColorStop(<span class="number">0</span>, <span class="string">'#8fe9d7'</span>);</span><br><span class="line">        lineargradient.addColorStop(<span class="number">1</span>, <span class="string">'#21d9b4'</span>);</span><br><span class="line">        ctx.strokeStyle = lineargradient</span><br><span class="line">        ctx.lineWidth = <span class="number">20</span> <span class="comment">// lineWidth一分为二，里外各占一半</span></span><br><span class="line">        ctx.lineCap = <span class="string">'round'</span></span><br><span class="line"></span><br><span class="line">        ctx.beginPath()</span><br><span class="line"></span><br><span class="line">        ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">80</span>, <span class="number">0</span>, angle)</span><br><span class="line">        ctx.stroke()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 三角 加动画</span></span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.rotate(angle)</span><br><span class="line">        ctx.translate(<span class="number">40</span>, <span class="number">0</span>)</span><br><span class="line">        ctx.fillStyle = <span class="string">'#abb2c1'</span></span><br><span class="line">        ctx.moveTo(<span class="number">0</span>, <span class="number">-6</span>)</span><br><span class="line">        ctx.lineTo(<span class="number">8</span>, <span class="number">0</span>)</span><br><span class="line">        ctx.lineTo(<span class="number">0</span>, <span class="number">6</span>)</span><br><span class="line">        ctx.closePath()</span><br><span class="line">        ctx.fill()</span><br><span class="line"></span><br><span class="line">        ctx.restore()</span><br><span class="line">        ctx.fillStyle = <span class="string">'#1f2348'</span></span><br><span class="line">        ctx.font = <span class="string">'30px serif'</span>;</span><br><span class="line">        ctx.fillText(initValue, <span class="number">-12</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        requestAnimationFrame(draw)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    draw()</span><br><span class="line"></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-12-10T12:33:47.553Z" itemprop="dateUpdated">2020-12-10 12:33:47</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/2020/07/07/canvas实战仪表盘/" target="_blank" rel="external">https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://wstreet.github.io/blog">
+            <img src="https://avatars1.githubusercontent.com/u/20897673" alt="wstreet">
+            wstreet
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/canvas/">canvas</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/&title=《canvas实战仪表盘》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/&title=《canvas实战仪表盘》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《canvas实战仪表盘》 — 步行街的Blog&url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/07/08/实现一个Event事件机制/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">实现一个Event事件机制</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/06/23/Debug下查看webpack编译过程/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Debug下查看webpack编译过程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a9c85d02310f60c6f17b',
+          clientSecret: '93d6e714db189defbb4a268a0e470ecd2d816692',
+          repo: 'blog-gitment',
+          owner: 'wstreet',
+          admin: ['wstreet'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>wstreet &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/&title=《canvas实战仪表盘》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/&title=《canvas实战仪表盘》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《canvas实战仪表盘》 — 步行街的Blog&url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wstreet.github.io/blog/2020/07/07/canvas实战仪表盘/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://unpkg.com/@wstreet7/watermark@latest/lib/watermark.min.js"></script>
+<script>
+    if (window.WaterMark) {
+        new window.WaterMark({
+            text: '@wstreet7',
+            height: 80,
+            width: 120,
+            fontWeight: 200,
+            fillStyle: '#ccc',
+            opacity: 0.5
+        })
+    }
+    
+</script>
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

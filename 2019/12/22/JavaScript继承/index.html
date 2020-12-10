@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?3370aa9648467f23f9c0c941e753869b"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>JavaScript继承 | 步行街的Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JavaScript">
+    <meta name="description" content="0、原型和原型链每个构造函数都会有一个prototype属性，指向它的原型对象，原型对象有一个constructor属性，指向构造函数，实例对象会有一个内部属性proto指向构造函数的原型对象，原型链就是通过proto一形成的一个链接，链接的顶部是Object.prototype，Object.prototype的proto属性指向null12345678910function Animal(na">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript继承">
+<meta property="og:url" content="https://wstreet.github.io/blog/2019/12/22/JavaScript继承/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="0、原型和原型链每个构造函数都会有一个prototype属性，指向它的原型对象，原型对象有一个constructor属性，指向构造函数，实例对象会有一个内部属性proto指向构造函数的原型对象，原型链就是通过proto一形成的一个链接，链接的顶部是Object.prototype，Object.prototype的proto属性指向null12345678910function Animal(na">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/211977/1576769280383-2b761a5f-0fb2-47c0-85ca-5e2cf49f37f7.png?x-oss-process=image/resize,w_604">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/211977/1576769449826-b971df11-c280-47c3-97d9-165d19d81ebd.png">
+<meta property="og:updated_time" content="2020-12-10T12:33:47.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript继承">
+<meta name="twitter:description" content="0、原型和原型链每个构造函数都会有一个prototype属性，指向它的原型对象，原型对象有一个constructor属性，指向构造函数，实例对象会有一个内部属性proto指向构造函数的原型对象，原型链就是通过proto一形成的一个链接，链接的顶部是Object.prototype，Object.prototype的proto属性指向null12345678910function Animal(na">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/211977/1576769280383-2b761a5f-0fb2-47c0-85ca-5e2cf49f37f7.png?x-oss-process=image/resize,w_604">
+    
+        <link rel="alternate" type="application/atom+xml" title="步行街的Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars1.githubusercontent.com/u/20897673">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">wstreet</h5>
+          <a href="mailto:wstreet7@outlook.com" title="wstreet7@outlook.com" class="mail">wstreet7@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/javascript-pro"  >
+                <i class="icon icon-lg icon-pinterest-p"></i>
+                Javascript进阶
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/wstreet" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript继承</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript继承</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-12-22T15:53:39.000Z" itemprop="datePublished" class="page-time">
+  2019-12-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript进阶/">JavaScript进阶</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0、原型和原型链"><span class="post-toc-number">1.</span> <span class="post-toc-text">0、原型和原型链</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、原型链继承"><span class="post-toc-number">2.</span> <span class="post-toc-text">1、原型链继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、构造函数继承"><span class="post-toc-number">3.</span> <span class="post-toc-text">2、构造函数继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、组合继承"><span class="post-toc-number">4.</span> <span class="post-toc-text">3、组合继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、原型式继承"><span class="post-toc-number">5.</span> <span class="post-toc-text">4、原型式继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、寄生式继承"><span class="post-toc-number">6.</span> <span class="post-toc-text">5、寄生式继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、寄生组合式继承"><span class="post-toc-number">7.</span> <span class="post-toc-text">6、寄生组合式继承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7、ES6-Class-extends继承"><span class="post-toc-number">8.</span> <span class="post-toc-text">7、ES6 Class extends继承</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript继承"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript继承</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-12-22 15:53:39" datetime="2019-12-22T15:53:39.000Z"  itemprop="datePublished">2019-12-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript进阶/">JavaScript进阶</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="0、原型和原型链"><a href="#0、原型和原型链" class="headerlink" title="0、原型和原型链"></a>0、原型和原型链</h2><p>每个构造函数都会有一个prototype属性，指向它的原型对象，原型对象有一个constructor属性，指向构造函数，实例对象会有一个内部属性<strong>proto</strong>指向构造函数的原型对象，原型链就是通过<strong>proto</strong>一形成的一个链接，链接的顶部是Object.prototype，Object.prototype的<strong>proto</strong>属性指向null<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Animal(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.getName = function() &#123;</span><br><span class="line">    return this.name</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.constructor === Animal // true</span><br><span class="line">const cat = new Animal(&apos;miao&apos;)</span><br><span class="line">cat.__proto__ === Animal.prototype // true</span><br><span class="line">Object.prototype.__proto__ === null // true</span><br></pre></td></tr></table></figure></p>
+<h2 id="1、原型链继承"><a href="#1、原型链继承" class="headerlink" title="1、原型链继承"></a>1、原型链继承</h2><p>我们知道原型链是通过对象的<strong>proto</strong>属性形成的一条链，原型链继承自然是通过<strong>proto</strong>继承</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function Animal(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.getName = function() &#123;</span><br><span class="line">    return this.name</span><br><span class="line">&#125;</span><br><span class="line">function Cat(name) &#123;</span><br><span class="line">  if(name) &#123;</span><br><span class="line">    this.name = name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 通过改变Cat的prototype属性，来改变Cat实例的__proto__指向</span><br><span class="line">// 将Animal的实例赋值给Cat的prototype属性</span><br><span class="line">const animal = new Animal(&apos;cat&apos;)</span><br><span class="line">Cat.prototype = animal</span><br><span class="line">Cat.prototype.constructor = Cat</span><br><span class="line">// 可进一步扩展</span><br><span class="line">// Cat.prototype.getAge = function() &#123;&#125; </span><br><span class="line">const cat = new Cat()</span><br><span class="line">cat.getName() // cat</span><br><span class="line">const myCat = new Cat(&apos;myCat&apos;)</span><br><span class="line">myCat.getName() // myCat</span><br></pre></td></tr></table></figure>
+<p>cat和myCat都是Cat构造函数的实例，我们通过给Cat.prototype重新赋值Animal的实例animal,使得cat和myCat的<strong>proto</strong>都指向animal，而animal具有name属性，animal.<strong>proto</strong>指向Animal.prototype，所以最终才可以使用getName获取name。</p>
+<blockquote>
+<p>总结：让子类实例的原型（<strong>proto</strong>）指向父类的一个实例</p>
+</blockquote>
+<blockquote>
+<p>优点：可以继承父类原型对象上的属性和方法</p>
+</blockquote>
+<blockquote>
+<p>缺点：1、父类的引用属性会被所有子类实例共享<br>          2、实例化子类时不能向父类传参</p>
+</blockquote>
+<h2 id="2、构造函数继承"><a href="#2、构造函数继承" class="headerlink" title="2、构造函数继承"></a>2、构造函数继承</h2><p>构造函数继承就是在子类构造函数中执行父类构造函数，并绑定this为子类实例（将父类实例的属性复制到在子类上），上代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Animal(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">  this.footer = &apos;footer&apos;</span><br><span class="line">  this.getName = function() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">function Cat(name, age) &#123;</span><br><span class="line">    this.age = age</span><br><span class="line">  Animal.call(this, name)</span><br><span class="line">&#125;</span><br><span class="line">const cat = new Cat(&apos;miao&apos;, 3)</span><br></pre></td></tr></table></figure></p>
+<p>如上代码所示，构造函数继承的重点是在子类构造函数中执行父类构造函数Animal.call(this, name)，将父类实例该有的属性都复制过来</p>
+<blockquote>
+<p>总结：重点在于Animal.call(this, name)</p>
+</blockquote>
+<blockquote>
+<p>优点：</p>
+</blockquote>
+<blockquote>
+<p>缺点：1、只能继承父类实例上该有的属性，无法继承父类实例原型上的属性和方法<br>          2、无法复用共有属性和方法，上述例子中，通过实例化Cat创建3个实例，三个实例中都有getName方法，造成内存浪费</p>
+</blockquote>
+<h2 id="3、组合继承"><a href="#3、组合继承" class="headerlink" title="3、组合继承"></a>3、组合继承</h2><p>组合继承从名字就可以看出来他不是新鲜玩意，他是将上述第一种继承（原型链继承）和第二种继承（构造函数继承）组合起来的一种方法，它既可以继承到父类构造函数原型上的共有属性和方法，也可以继承到父类实例自身该有的属性和方法，不多说上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function Animal(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">  this.footer = &apos;footer&apos;</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.getName = function() &#123;</span><br><span class="line">    return this.name</span><br><span class="line">&#125;</span><br><span class="line">function Cat(name, age) &#123;</span><br><span class="line">    this.age = age</span><br><span class="line">  // 构造函数继承</span><br><span class="line">  Animal.call(this, name)</span><br><span class="line">&#125;</span><br><span class="line">// 原型链继承</span><br><span class="line">const animal = new Animal(&apos;cat&apos;)</span><br><span class="line">Cat.prototype = animal</span><br><span class="line">// 重写Cat.prototype.constructor指向</span><br><span class="line">Cat.prototype.constructor = Cat</span><br><span class="line">const cat = new Cat(&apos;miao&apos;, 4)</span><br></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.nlark.com/yuque/0/2019/png/211977/1576769280383-2b761a5f-0fb2-47c0-85ca-5e2cf49f37f7.png?x-oss-process=image/resize,w_604" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://cdn.nlark.com/yuque/0/2019/png/211977/1576769449826-b971df11-c280-47c3-97d9-165d19d81ebd.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>通过上述代码发现，实例cat和其原型cat.<strong>proto</strong>（animal）上都有父类（Animal）实例该有的属性，只不过cat上的属性会屏蔽其原型上的同名属性和方法</p>
+<blockquote>
+<p>总结：将原型链继承和构造函数继承结合起来</p>
+</blockquote>
+<blockquote>
+<p>优点：可以将父类原型对象上的属性、方法和父类实例自身该有的属性、方法都继承过来</p>
+</blockquote>
+<blockquote>
+<p>缺点：子类实例和子类实例原型上存在一部分同名属性和方法，造成内存浪费</p>
+</blockquote>
+<h2 id="4、原型式继承"><a href="#4、原型式继承" class="headerlink" title="4、原型式继承"></a>4、原型式继承</h2><p>原型式继承和Obje.create()方法原理一致，但是又有点区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function extend(obj) &#123;</span><br><span class="line">  function F() &#123;&#125;</span><br><span class="line">  F.prototype = obj</span><br><span class="line">  return new F()</span><br><span class="line">&#125;</span><br><span class="line">const person = &#123;</span><br><span class="line">  name: &apos;streetex&apos;,</span><br><span class="line">  colors: [&apos;red&apos;]</span><br><span class="line">&#125;</span><br><span class="line">const anotherPerson = extend(person) // &#123;name: &apos;streetex&#125;</span><br><span class="line">anotherPerson.name = &apos;007&apos;</span><br><span class="line">console.log(person.name) // &apos;streetex&apos;</span><br><span class="line">anotherPerson.colors.push(&apos;black&apos;)</span><br><span class="line">console.log(person.colors) // [&apos;red&apos;, &apos;black&apos;]</span><br></pre></td></tr></table></figure>
+<p>原型式继承和原型链继承差不多，都是通过修改构造函数的prototype为指定对象，但是原型式继承将这种操作包在了函数里边，另外原型式继承实际上是将参数对象person进行了一次浅复制</p>
+<blockquote>
+<p>总结</p>
+</blockquote>
+<blockquote>
+<p>优点：可以复用父类方法</p>
+</blockquote>
+<blockquote>
+<p>缺点：父对象的引用属性会被所有子实例共享；创建子实例时无法传参<br>上述缺点已被修正，就是Object.create方法</p>
+</blockquote>
+<h2 id="5、寄生式继承"><a href="#5、寄生式继承" class="headerlink" title="5、寄生式继承"></a>5、寄生式继承</h2><p>寄生式继承是在原型式继承的基础上进行了增强，怎么增强？上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function extend(obj) &#123;</span><br><span class="line">  function F() &#123;&#125;</span><br><span class="line">  F.prototype = obj</span><br><span class="line">  return new F()</span><br><span class="line">&#125;</span><br><span class="line">function create(obj) &#123;</span><br><span class="line">    const anotherObj = extend(obj)</span><br><span class="line">  anotherObj.getName = function() &#123;</span><br><span class="line">    return this.name</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  return anotherObj</span><br><span class="line">&#125;</span><br><span class="line">const person = &#123;</span><br><span class="line">  name: &apos;streetex&apos;,</span><br><span class="line">  colors: [&apos;red&apos;]</span><br><span class="line">&#125;</span><br><span class="line">const anotherPerson = create(person)</span><br></pre></td></tr></table></figure>
+<p>可以看出寄生式继承是在函数内通过原型式继承创建一个对象，然后进行增强，最后返回</p>
+<blockquote>
+<p>总结：在原型式继承的基础上进行了增强</p>
+</blockquote>
+<blockquote>
+<p>优点：可以复用父类方法，并且可以进行增强</p>
+</blockquote>
+<blockquote>
+<p>缺点：父对象的引用属性会被所有子实例共享；创建子实例时无法传参（和原型式继承一样）</p>
+</blockquote>
+<h2 id="6、寄生组合式继承"><a href="#6、寄生组合式继承" class="headerlink" title="6、寄生组合式继承"></a>6、寄生组合式继承</h2><p>在第3点介绍的组合继是是原型链继承和构造函数继承的组合，它的缺点有一条是父构造函数调用了两次，造成了浪费，我认为寄生组合式继承是寄生式继承、原型链继承和构造函数继承的组合，父构造函数只会调用一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">function inherit(Sub, Sup) &#123;</span><br><span class="line">  // Object.create和原型式继承一样，返回一个参数对象的副本</span><br><span class="line">  // 寄生式继承+原型链继承</span><br><span class="line">    const prototype = Object.create(Sup.prototype)</span><br><span class="line">  </span><br><span class="line">  Sub.prototype = prototype   // 改变子类构造函数的prototype</span><br><span class="line">  Sub.prototype.constructor = Sub</span><br><span class="line">&#125;</span><br><span class="line">function SupType(name) &#123;</span><br><span class="line">    this.name = name</span><br><span class="line">  this.colors = [&apos;red&apos;]</span><br><span class="line">&#125;</span><br><span class="line">SupType.prototype.getName = function()&#123;</span><br><span class="line">  return this.name</span><br><span class="line">&#125;;</span><br><span class="line">function SubType(name,age) &#123;</span><br><span class="line">  this.age = age</span><br><span class="line">  // 构造函数继承</span><br><span class="line">    SupType.call(this, name)</span><br><span class="line">&#125;</span><br><span class="line">inherit(SubType, SupType)</span><br><span class="line">SubType.prototype.getAge = function() &#123;</span><br><span class="line">    return this.age</span><br><span class="line">&#125;</span><br><span class="line">const sub = new SubType(&apos;streetex&apos;, 25)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>优点： </p>
+</blockquote>
+<blockquote>
+<p>缺点：无</p>
+</blockquote>
+<h2 id="7、ES6-Class-extends继承"><a href="#7、ES6-Class-extends继承" class="headerlink" title="7、ES6 Class extends继承"></a>7、ES6 Class extends继承</h2><p>JavaScript是基于原型继承的语言，即使ES6新增了class，他依然是基于原型继承的，class只是一种语法糖，es6中的类继承的关键字式extends，并且在子类中通过调用super方法将父类实例对象上的方法和属性加到子类实例上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Animal &#123;</span><br><span class="line">    constructor(name) &#123;</span><br><span class="line">    this.name = name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Cat extends Animal &#123;</span><br><span class="line">    constructor(name) &#123;</span><br><span class="line">    super(name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">typeof Cat // function</span><br></pre></td></tr></table></figure></p>
+<p>8、参考文章</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000015727237#item-2-7" target="_blank" rel="noopener">一篇文章理解JS继承——原型链/构造函数/组合/原型式/寄生式/寄生组合/Class extends</a></li>
+<li><a href="https://juejin.im/post/5bcb2e295188255c55472db0" target="_blank" rel="noopener">JavaScript常用八种继承方案</a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-12-10T12:33:47.553Z" itemprop="dateUpdated">2020-12-10 12:33:47</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/2019/12/22/JavaScript继承/" target="_blank" rel="external">https://wstreet.github.io/blog/2019/12/22/JavaScript继承/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://wstreet.github.io/blog">
+            <img src="https://avatars1.githubusercontent.com/u/20897673" alt="wstreet">
+            wstreet
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/&title=《JavaScript继承》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/&title=《JavaScript继承》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript继承》 — 步行街的Blog&url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/12/28/模拟class继承/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">模拟class继承</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/09/04/github-actions-自动构建部署hexo-blog/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">github actions 自动构建部署hexo blog</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a9c85d02310f60c6f17b',
+          clientSecret: '93d6e714db189defbb4a268a0e470ecd2d816692',
+          repo: 'blog-gitment',
+          owner: 'wstreet',
+          admin: ['wstreet'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>wstreet &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/&title=《JavaScript继承》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/&title=《JavaScript继承》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript继承》 — 步行街的Blog&url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wstreet.github.io/blog/2019/12/22/JavaScript继承/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://unpkg.com/@wstreet7/watermark@latest/lib/watermark.min.js"></script>
+<script>
+    if (window.WaterMark) {
+        new window.WaterMark({
+            text: '@wstreet7',
+            height: 80,
+            width: 120,
+            fontWeight: 200,
+            fillStyle: '#ccc',
+            opacity: 0.5
+        })
+    }
+    
+</script>
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?3370aa9648467f23f9c0c941e753869b"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>JavaScript防抖（debounce） | 步行街的Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JavaScript">
+    <meta name="description" content="前言在日常的开发中，经常会遇到事件频繁触发，比如：  表单元素的change window的scroll、resize mousemove等  举例：现在有一个搜索框，但是没有搜索按钮，搜索触发点是在输入关键字的时候 1234567891011121314151617181920212223// React写法// index.jsxclass Index extends Component &amp;#">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript防抖（debounce）">
+<meta property="og:url" content="https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="前言在日常的开发中，经常会遇到事件频繁触发，比如：  表单元素的change window的scroll、resize mousemove等  举例：现在有一个搜索框，但是没有搜索按钮，搜索触发点是在输入关键字的时候 1234567891011121314151617181920212223// React写法// index.jsxclass Index extends Component &amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-10T12:33:47.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript防抖（debounce）">
+<meta name="twitter:description" content="前言在日常的开发中，经常会遇到事件频繁触发，比如：  表单元素的change window的scroll、resize mousemove等  举例：现在有一个搜索框，但是没有搜索按钮，搜索触发点是在输入关键字的时候 1234567891011121314151617181920212223// React写法// index.jsxclass Index extends Component &amp;#">
+    
+        <link rel="alternate" type="application/atom+xml" title="步行街的Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars1.githubusercontent.com/u/20897673">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">wstreet</h5>
+          <a href="mailto:wstreet7@outlook.com" title="wstreet7@outlook.com" class="mail">wstreet7@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/javascript-pro"  >
+                <i class="icon icon-lg icon-pinterest-p"></i>
+                Javascript进阶
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/wstreet" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JavaScript防抖（debounce）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JavaScript防抖（debounce）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-07T12:28:44.000Z" itemprop="datePublished" class="page-time">
+  2019-04-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript进阶/">JavaScript进阶</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#防抖"><span class="post-toc-number">2.</span> <span class="post-toc-text">防抖</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第一版"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">第一版</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第二版"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">第二版</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JavaScript防抖（debounce）"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JavaScript防抖（debounce）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-07 12:28:44" datetime="2019-04-07T12:28:44.000Z"  itemprop="datePublished">2019-04-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript进阶/">JavaScript进阶</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在日常的开发中，经常会遇到事件频繁触发，比如：</p>
+<ul>
+<li>表单元素的<code>change</code></li>
+<li><code>window</code>的<code>scroll</code>、<code>resize</code></li>
+<li><code>mousemove</code>等</li>
+</ul>
+<p>举例：现在有一个搜索框，但是没有搜索按钮，搜索触发点是在输入关键字的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// React写法</span><br><span class="line">// index.jsx</span><br><span class="line"></span><br><span class="line">class Index extends Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props)</span><br><span class="line">        state = &#123;</span><br><span class="line">            value: &apos;&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    onChange(e) &#123;</span><br><span class="line">        search(e.target.value) // 假设search是有个已经实现的搜索函数</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;form&gt;</span><br><span class="line">                    &lt;input value=&#123;this.state.value&#125; onChange=&#123;this.onChange.bind(this)&#125; /&gt;</span><br><span class="line">                &lt;/form&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的例子每次输入值都会调用this.onChange函数，我们想要的效果是主动触发搜索，但是没有必要每次输入都去执行，解决这个问题有两种方法：</p>
+<ol>
+<li>防抖</li>
+<li>节流</li>
+</ol>
+<h2 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><blockquote>
+<p>你尽管出发触发事件，但是我一定在事件触发n秒后才执行，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行，总之，就是要等你触发完事件 n 秒内不再触发事件，我才执行，真是任性呐!<br>—– <a href="https://github.com/mqyqingfeng/Blog/issues/22" target="_blank" rel="noopener">冴羽</a></p>
+</blockquote>
+<p>所以针对上面的例子，只需要在所有内容输入完后再去执行this.onChange，条件是输入时停顿的时间不能大于设置的wait时间，否则就认为你已经输入完成</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function debounce(func, wait) &#123;</span><br><span class="line">    let timer;</span><br><span class="line">    return function (...args) &#123;</span><br><span class="line">        if (timer) clearTimeout(timer)</span><br><span class="line">        </span><br><span class="line">        timer = setTimeout(() =&gt; &#123;</span><br><span class="line">            func.apply(this, args)</span><br><span class="line">        &#125;, wait);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onChange=&#123;debounce(this.onChange)&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第一版已经实现了防抖功能，但是还存在缺陷，这个防抖只能适用于输入这种后触发，有些事件可能需要立即触发，比如resize、mousemove等，所以我们还需要再加一个immediate选项，表示是否立即调用</p>
+<h4 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function debounce(func, wait, immediate) &#123;</span><br><span class="line"></span><br><span class="line">    let timer;</span><br><span class="line"></span><br><span class="line">    return function (...args) &#123;</span><br><span class="line">        const context = this;</span><br><span class="line"></span><br><span class="line">        if (timer) clearTimeout(timer);</span><br><span class="line">        if (immediate) &#123;</span><br><span class="line">            // 如果已经执行过，不再执行</span><br><span class="line">            let callNow = !timer;</span><br><span class="line">            timer = setTimeout(function()&#123;</span><br><span class="line">                timer = null;</span><br><span class="line">            &#125;, wait) // 触发wait时间后，timer为null，才可以重新触发</span><br><span class="line">            if (callNow) func.apply(context, args)</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            timer = setTimeout(function()&#123;</span><br><span class="line">                func.apply(context, args)</span><br><span class="line">            &#125;, wait);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两种效果：</p>
+<ul>
+<li>立即执行：immediate为真时，立即执行，停止触发n秒后才能再次执行</li>
+<li>延迟执行：immediate为假时，事件停止触发n秒后执行</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-12-10T12:33:47.553Z" itemprop="dateUpdated">2020-12-10 12:33:47</time>
+</span><br>
+
+
+        
+        本文地址：<a href="/2019/04/07/JavaScript防抖（debounce）/" target="_blank" rel="external">https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://wstreet.github.io/blog">
+            <img src="https://avatars1.githubusercontent.com/u/20897673" alt="wstreet">
+            wstreet
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/&title=《JavaScript防抖（debounce）》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/&title=《JavaScript防抖（debounce）》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript防抖（debounce）》 — 步行街的Blog&url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/22/javaScriptEngine_context_callStack/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Javascript引擎、执行上下文和调用栈</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/03/redux中的applyMiddleware详解/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">redux中的applyMiddleware详解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a9c85d02310f60c6f17b',
+          clientSecret: '93d6e714db189defbb4a268a0e470ecd2d816692',
+          repo: 'blog-gitment',
+          owner: 'wstreet',
+          admin: ['wstreet'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>wstreet &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/&title=《JavaScript防抖（debounce）》 — 步行街的Blog&pic=https://avatars1.githubusercontent.com/u/20897673" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/&title=《JavaScript防抖（debounce）》 — 步行街的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript防抖（debounce）》 — 步行街的Blog&url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/&via=https://wstreet.github.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://wstreet.github.io/blog/2019/04/07/JavaScript防抖（debounce）/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://unpkg.com/@wstreet7/watermark@latest/lib/watermark.min.js"></script>
+<script>
+    if (window.WaterMark) {
+        new window.WaterMark({
+            text: '@wstreet7',
+            height: 80,
+            width: 120,
+            fontWeight: 200,
+            fillStyle: '#ccc',
+            opacity: 0.5
+        })
+    }
+    
+</script>
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
