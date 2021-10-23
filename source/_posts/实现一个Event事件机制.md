@@ -1,8 +1,8 @@
 ---
 title: 实现一个Event事件机制
 date: 2020-07-08 22:37:24
-tags: Javascript
-categories: Javascript进阶
+tags: JavaScript
+categories: JavaScript进阶
 ---
 
 
