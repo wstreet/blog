@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="call、apply、bind区别：call和apply都是为了解决this的指向，作用相同，只是传参方式不同。除了第一个参数外，call可以接受一个参数列表，apply只接收一个参数数组。 1234567891011let a &#x3D; &amp;#123;    value: 1&amp;#125;function getValue(anme, age) &amp;#123;    console.log(nam">
+<meta property="og:type" content="article">
+<meta property="og:title" content="call、apply、bind模拟实现">
+<meta property="og:url" content="https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="call、apply、bind区别：call和apply都是为了解决this的指向，作用相同，只是传参方式不同。除了第一个参数外，call可以接受一个参数列表，apply只接收一个参数数组。 1234567891011let a &#x3D; &amp;#123;    value: 1&amp;#125;function getValue(anme, age) &amp;#123;    console.log(nam">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-01T19:06:47.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>call、apply、bind模拟实现</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2019/04/02/redux%E4%B8%ADcompose%E8%AF%A6%E8%A7%A3/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2019/03/31/git%E4%BF%AE%E6%94%B9%E5%88%86%E6%94%AF%E5%90%8D%E7%A7%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&text=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&is_video=false&description=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=call、apply、bind模拟实现&body=Check out this article: https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&name=call、apply、bind模拟实现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&t=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#call、apply、bind"><span class="toc-number">1.</span> <span class="toc-text">call、apply、bind</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">1.1.</span> <span class="toc-text">区别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模拟实现call和apply"><span class="toc-number">1.2.</span> <span class="toc-text">模拟实现call和apply</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bind模拟实现"><span class="toc-number">1.3.</span> <span class="toc-text">bind模拟实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#返回函数的模拟实现"><span class="toc-number">1.3.1.</span> <span class="toc-text">返回函数的模拟实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#传参模拟实现"><span class="toc-number">1.3.2.</span> <span class="toc-text">传参模拟实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#构造函数效果的模拟实现"><span class="toc-number">1.3.3.</span> <span class="toc-text">构造函数效果的模拟实现</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        call、apply、bind模拟实现
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">wstreet</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-01T19:06:47.000Z" itemprop="datePublished">2019-04-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript%E8%BF%9B%E9%98%B6/">JavaScript进阶</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="call、apply、bind"><a href="#call、apply、bind" class="headerlink" title="call、apply、bind"></a>call、apply、bind</h3><h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><p>call和apply都是为了解决this的指向，作用相同，只是传参方式不同。除了第一个参数外，call可以接受一个参数列表，apply只接收一个参数数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let a &#x3D; &#123;</span><br><span class="line">    value: 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getValue(anme, age) &#123;</span><br><span class="line">    console.log(name)</span><br><span class="line">    console.log(age)</span><br><span class="line">    console.log(this.value)</span><br><span class="line">&#125;</span><br><span class="line">getValue.call(a, &#39;md&#39;, 24)</span><br><span class="line">getValue.apply(a, [&#39;md&#39;, 24])</span><br></pre></td></tr></table></figure>
+<h4 id="模拟实现call和apply"><a href="#模拟实现call和apply" class="headerlink" title="模拟实现call和apply"></a>模拟实现call和apply</h4><p>参考以下几点考虑如何实现：</p>
+<ul>
+<li>不传入第一个参数，默认this指向window</li>
+<li>改变this指向后，让新的对象执行该函数，那么思路是否可以变成给新的对象添加一个函数，然后在执行后删除。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; call的实现思路</span><br><span class="line">Function.prototype.myCall &#x3D; function(context, ...rest) &#123;</span><br><span class="line">    const context &#x3D; context || window</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 给context添加一个新属性</span><br><span class="line">    &#x2F;&#x2F; getValue.call(a, &#39;yck&#39;, &#39;24&#39;) &#x3D;&gt; a.fn &#x3D; getValue</span><br><span class="line">    context.fn &#x3D; this</span><br><span class="line"></span><br><span class="line">    const result &#x3D; context.fn(...rest)</span><br><span class="line">    &#x2F;&#x2F; 删除fn</span><br><span class="line">    delete context.fn</span><br><span class="line">    return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; apply的实现思路</span><br><span class="line">Function.prototype.myApply &#x3D; function(context) &#123;</span><br><span class="line">    const context &#x3D; context || window</span><br><span class="line">    context.fn &#x3D; this</span><br><span class="line">    </span><br><span class="line">    let result</span><br><span class="line">    &#x2F;&#x2F; 判断是否存在第二个参数</span><br><span class="line">    &#x2F;&#x2F; 如果存在，就将第二个参数展开</span><br><span class="line">    if(arguments[1]) &#123;</span><br><span class="line">        result &#x3D; context.fn(...arguments[1])</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        result &#x3D; context.fn()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    delete context.fn</span><br><span class="line">    </span><br><span class="line">    return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>bind和其他两个方法作用是一样的，只是该方法会返回一个函数。并且我们可以通过bind实现柯里化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var value &#x3D; 0;</span><br><span class="line">var obj &#x3D; &#123;</span><br><span class="line">   value : 1,</span><br><span class="line">&#125;</span><br><span class="line">function show(name)&#123;</span><br><span class="line">    console.log(this.value);</span><br><span class="line">    console.log(name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">show(&#39;007&#39;) </span><br><span class="line">&#x2F;&#x2F; 0</span><br><span class="line">&#x2F;&#x2F; 007</span><br><span class="line">show.bind(obj, &#39;步行街&#39;)</span><br><span class="line">&#x2F;&#x2F; 1</span><br><span class="line">&#x2F;&#x2F; 步行街</span><br><span class="line">show.bind(null, &#39;步行街&#39;)</span><br><span class="line">&#x2F;&#x2F; 0</span><br><span class="line">&#x2F;&#x2F; 步行街</span><br></pre></td></tr></table></figure>
+<h4 id="bind模拟实现"><a href="#bind模拟实现" class="headerlink" title="bind模拟实现"></a>bind模拟实现</h4><h5 id="返回函数的模拟实现"><a href="#返回函数的模拟实现" class="headerlink" title="返回函数的模拟实现"></a>返回函数的模拟实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.myBind &#x3D; function(context) &#123;</span><br><span class="line">    const context &#x3D; context || window</span><br><span class="line">    return function() &#123;</span><br><span class="line">        this.apply(context)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="传参模拟实现"><a href="#传参模拟实现" class="headerlink" title="传参模拟实现"></a>传参模拟实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.myBind &#x3D; function(context) &#123;</span><br><span class="line">    const context &#x3D; context || window</span><br><span class="line">    </span><br><span class="line">    var self &#x3D; this</span><br><span class="line">    </span><br><span class="line">    var args &#x3D; [...arguments].splice(1)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    return function() &#123;</span><br><span class="line">        return self.apply(context, args.concat(...arguments))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="构造函数效果的模拟实现"><a href="#构造函数效果的模拟实现" class="headerlink" title="构造函数效果的模拟实现"></a>构造函数效果的模拟实现</h5><blockquote>
+<p>模拟完以上功能还有一个最难的部分没有实现：一个绑定函数也能使用<code>new</code>操作符创建对象</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.myBind &#x3D; function(context) &#123;</span><br><span class="line">    if (typeof this !&#x3D;&#x3D; &#39;function&#39;) &#123;</span><br><span class="line">        throw new Error(&#39;Error&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">    const context &#x3D; context || window</span><br><span class="line">    </span><br><span class="line">    var self &#x3D; this</span><br><span class="line">    </span><br><span class="line">    var args &#x3D; [...arguments].splice(1)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    return function F() &#123;</span><br><span class="line">    if (this instanceof F) &#123;</span><br><span class="line">        return new self(...args, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">        return self.apply(context, args.concat(...arguments))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#call、apply、bind"><span class="toc-number">1.</span> <span class="toc-text">call、apply、bind</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">1.1.</span> <span class="toc-text">区别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模拟实现call和apply"><span class="toc-number">1.2.</span> <span class="toc-text">模拟实现call和apply</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bind模拟实现"><span class="toc-number">1.3.</span> <span class="toc-text">bind模拟实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#返回函数的模拟实现"><span class="toc-number">1.3.1.</span> <span class="toc-text">返回函数的模拟实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#传参模拟实现"><span class="toc-number">1.3.2.</span> <span class="toc-text">传参模拟实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#构造函数效果的模拟实现"><span class="toc-number">1.3.3.</span> <span class="toc-text">构造函数效果的模拟实现</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&text=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&is_video=false&description=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=call、apply、bind模拟实现&body=Check out this article: https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&title=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&name=call、apply、bind模拟实现&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation/&t=call、apply、bind模拟实现" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

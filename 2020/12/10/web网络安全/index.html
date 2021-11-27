@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="XSS定义：XSS(Cross Site Scripting)，跨站脚本攻击。是一种经常出现在web应用中的安全漏洞，它允许恶意用户将将代码植入到其他用户的页面，这些代码包括HTML和JavaScript脚本。 危害：  盗取各类用户账号(cookie) 篡改数据 非法转账 发送恶意邮件 控制受害者电脑向其他电脑发起攻击等  类型：持久型：攻击者将恶意代码（脚本）提交到数据库，当每个用户打开这个页">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web网络安全">
+<meta property="og:url" content="https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="XSS定义：XSS(Cross Site Scripting)，跨站脚本攻击。是一种经常出现在web应用中的安全漏洞，它允许恶意用户将将代码植入到其他用户的页面，这些代码包括HTML和JavaScript脚本。 危害：  盗取各类用户账号(cookie) 篡改数据 非法转账 发送恶意邮件 控制受害者电脑向其他电脑发起攻击等  类型：持久型：攻击者将恶意代码（脚本）提交到数据库，当每个用户打开这个页">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-10T20:31:24.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>web网络安全</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2020/11/10/Http%E7%BC%93%E5%AD%98/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&text=web网络安全" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&is_video=false&description=web网络安全" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web网络安全&body=Check out this article: https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&name=web网络安全&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&t=web网络安全" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">1.</span> <span class="toc-text">XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF"><span class="toc-number">2.</span> <span class="toc-text">CSRF</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web网络安全
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">wstreet</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-12-10T20:31:24.000Z" itemprop="datePublished">2020-12-10</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p><strong>定义：</strong><br>XSS(Cross Site Scripting)，跨站脚本攻击。是一种经常出现在web应用中的安全漏洞，它允许恶意用户将将代码植入到其他用户的页面，这些代码包括HTML和JavaScript脚本。</p>
+<p><strong>危害：</strong></p>
+<ul>
+<li>盗取各类用户账号(cookie)</li>
+<li>篡改数据</li>
+<li>非法转账</li>
+<li>发送恶意邮件</li>
+<li>控制受害者电脑向其他电脑发起攻击等</li>
+</ul>
+<p><strong>类型：</strong><br><em>持久型</em>：攻击者将恶意代码（脚本）提交到数据库，当每个用户打开这个页面时，恶意代码将会执行，例如，留言板提交 <code>&lt;script&gt;alert(&#39;1&#39;)&lt;/script&gt;</code> 。<br><em>反射型</em>：非持久型。发出请求时，XSS攻击代码出现在URL中，作为输入提交到服务器，服务器解析处理后，XSS代码随响应一起返回给浏览器，最后浏览器解析执行XSS代码，这个过程像一次反射，所以叫做反射型XSS<br><em>DOM-XSS</em>：JavaScript可以对DOM做更改，改攻击就是利用了这一点，一般是将攻击脚本加载URL后面或者页面输入恶意脚本内容，浏览器执行更改DOM</p>
+<p><strong>XSS漏洞存在的原因</strong>：<br>XSS漏洞的根本原因是没有对URL参数、用户输入内容进行充分的过滤，如果我们将不合法的参数和内容进行充分过滤，就可以有效减少被攻击的可能性。</p>
+<p>但实际上，充分有效的过滤是无法实现的，因为攻击者有各种各样神奇的、你完全想象不到的方式来绕开服务端的过滤。最典型的就是对URL和参数进行各种的编码，比如escape, encodeURI, encodeURIComponent, 16进制，10进制，8进制，来绕过XSS过滤。那么我们如何来防御XSS呢？</p>
+<p><strong>预防方法：</strong><br>总体思路：对参数和输入进行过滤，对输出进行编码</p>
+<p><em>参数和输入进行过滤</em>：对于输入的内容，客户端和服务端都进行合法校验；服务端将容易引起xss漏洞的半角字符直接替换成全角字符。<br><em>对输出进行编码</em>：虽然对参数和输入内容进行了过滤，但是不能保证输出到页面的内容不含有攻击脚本，所以需要对输出内容进行编码，使得恶意脚本无法执行。</p>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p><strong>定义：</strong><br>CSRF(Cross-site request forgery)，跨站请求伪造。攻击者诱导用户打开攻击网站B，网站B向用户信任并且已经登陆的网站A发起跨站请求，拿到用户的登陆状态（cookie），然后伪装成用户进行非法操作。</p>
+<p>从攻击网站B向信任服务器A发送请求方式有3中：<br>1、诱导用户通过点击a链接发送请求<br>2、img标签自动发送请求<br>3、通过脚本发送请求</p>
+<p><strong>预防方法</strong>：<br>CSRF攻击主要由服务器端设置来预防，主要预防措施有以下几种：<br>1、利用cookie的SameSite属性，SameSite有Strict、Lax和None三个值</p>
+<ul>
+<li>Strict最为严格，如果cookie设置了Strict，那么浏览器会完全禁止第三方Cookie。</li>
+<li>Lax相对宽松一点，在跨站点的情况下，从第三方站点的链接打开和从第三方站点提交Get的表单都会携带cookie.但是如果在第三方站点中使用Post方法或者通过img、iframe等标签加载的URL,都不会携带Cookie。</li>
+<li>None, 任何情况下都会发送Cookie。</li>
+</ul>
+<p>此方法适用于静态资源和接口服务器在同一域名下的情况。</p>
+<p>2、验证请求来源<br>在服务器端验证请求来源，因为一般攻击都是第三方站点。</p>
+<ul>
+<li>Referer属性：记录了该Http请求的来源站点。但是Referer属性是可以修改的，所以在服务器端校验Referer属性并没有那么可靠。</li>
+<li>origin属性：通过XMLHttpRequest、Fetch发起的跨站请求或者Post方法发送请求时，都会带上origin,所以服务器可以优先判断Origin属性，再根据实际情况判断是否使用referer判断</li>
+</ul>
+<p>3、token<br>最保险的方法就是使用token验证，在向服务器发起请求时，服务端生成一个唯一的token返回给浏览器，在浏览器的后续请求中需要携带这个token，服务器验证其合法性，验证不通过则拒绝请求。</p>
+<p><strong>补充说明：</strong> Referer的正确英语拼法是<code>referrer</code> 。由于早期HTTP规范的拼写错误，为了保持向后兼容就将错就错了。其它网络技术的规范企图修正此问题，使用正确拼法，所以目前拼法不统一，还有它第一个字母是大写。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">1.</span> <span class="toc-text">XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF"><span class="toc-number">2.</span> <span class="toc-text">CSRF</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&text=web网络安全" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&is_video=false&description=web网络安全" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web网络安全&body=Check out this article: https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&title=web网络安全" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&name=web网络安全&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/12/10/web%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/&t=web网络安全" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

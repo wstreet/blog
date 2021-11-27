@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="矩阵变换是一种线性变换，线段变换后仍是线段，并且原点不会改变  数学中的矩阵计算矩阵计算包括加法、减法、乘法、共轭、转置等，在平面图形中主要介绍点乘。矩阵的乘法满足以下运算律：结合律：左分配律：右分配律：  齐次坐标齐次坐标使用(x, y, w)描述，等价与二维坐标(x&#x2F;w, y&#x2F;w)，如果w &#x3D; 1，就可以当二维坐标使用，w的值必须大于等于0。如果w趋近于0，那么它表示的点将趋近无穷远，所以在齐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二维矩阵变换">
+<meta property="og:url" content="https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="矩阵变换是一种线性变换，线段变换后仍是线段，并且原点不会改变  数学中的矩阵计算矩阵计算包括加法、减法、乘法、共轭、转置等，在平面图形中主要介绍点乘。矩阵的乘法满足以下运算律：结合律：左分配律：右分配律：  齐次坐标齐次坐标使用(x, y, w)描述，等价与二维坐标(x&#x2F;w, y&#x2F;w)，如果w &#x3D; 1，就可以当二维坐标使用，w的值必须大于等于0。如果w趋近于0，那么它表示的点将趋近无穷远，所以在齐">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884960-a840a57a-73ca-40bf-a567-c1ea5ae7f783.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=162&amp;size=0&amp;status=done&amp;style=none&amp;width=162">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884879-6da84ab5-f4a7-4f57-8eae-00ab72d19772.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=206&amp;size=0&amp;status=done&amp;style=none&amp;width=206">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884926-98556cb0-0455-4ec6-9ed5-59753fec2d71.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=206&amp;size=0&amp;status=done&amp;style=none&amp;width=206">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/143ff58166d34dc70012218424c1617f.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C%20%5Cend%7Bbmatrix%7D&amp;height=45&amp;width=32">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/f3aa3922109adeaa4c86eea720e01d2b.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Ddx%5C%5Cdy%5C%5C%20%5Cend%7Bbmatrix%7D&amp;height=45&amp;width=41">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/5c6021e16849740ec8b90d658557f07b.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%20%2B%20dx%5C%5Cy%2Bdy%5C%5C%20%5Cend%7Bbmatrix%7D&amp;height=45&amp;width=71">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/ea60306c89932a5916d857fa38649630.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D1%260%26dx%20%5C%5C0%261%26dy%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=96">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/ea60306c89932a5916d857fa38649630.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D1%260%26dx%20%5C%5C0%261%26dy%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=96">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/fbe884ed0dbae4948e1a6f6ab0f32167.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%20%2B%20dx%5C%5Cy%20%2B%20dy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=76">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/37a96752e7f549b76f31c348ad89e3d0.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%260%260%20%5C%5C0%26sy%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=103">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/37a96752e7f549b76f31c348ad89e3d0.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%260%260%20%5C%5C0%26sy%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=103">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/e5fe799973d046b5c28e3fa49ea3109d.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%2Ax%20%5C%5Csy%2Ay%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=70">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/211977/1592323489719-6f865b7a-4492-43b5-b271-3ba2ce59c79e.png#align=left&amp;display=inline&amp;height=267&amp;margin=%5Bobject%20Object%5D&amp;name=71080-20171116101008734-1171446672.png&amp;originHeight=267&amp;originWidth=273&amp;size=18308&amp;status=done&amp;style=none&amp;width=273">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/b4829dedb886227240900e48329e560a.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dcos%CE%B8%26-sin%CE%B8%260%20%5C%5Csin%CE%B8%26cos%CE%B8%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=66&amp;width=146">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/b4829dedb886227240900e48329e560a.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dcos%CE%B8%26-sin%CE%B8%260%20%5C%5Csin%CE%B8%26cos%CE%B8%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=66&amp;width=146">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/ec8e0071191b7f871f80280ae5a1758f.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%2Acos%CE%B8%20-%20y%2Asin%CE%B8%5C%5Cx%2Asin%CE%B8%2Bycos%CE%B8%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=160">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/4a2e3046790d79d12b2170447ebd48a3.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D%0A%20a%20%26%20c%20%26%20e%20%5C%5C%0A%20b%20%26%20d%20%26%20f%20%5C%5C%0A%200%20%26%200%20%26%201%20%20%0A%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=88">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/ea60306c89932a5916d857fa38649630.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D1%260%26dx%20%5C%5C0%261%26dy%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=96">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/37a96752e7f549b76f31c348ad89e3d0.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%260%260%20%5C%5C0%26sy%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=103">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/__latex/b4829dedb886227240900e48329e560a.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dcos%CE%B8%26-sin%CE%B8%260%20%5C%5Csin%CE%B8%26cos%CE%B8%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=66&amp;width=146">
+<meta property="article:published_time" content="2020-06-17T22:36:08.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta property="article:tag" content="canvas">
+<meta property="article:tag" content="svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884960-a840a57a-73ca-40bf-a567-c1ea5ae7f783.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=162&amp;size=0&amp;status=done&amp;style=none&amp;width=162">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>二维矩阵变换</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2020/06/16/%E5%A6%82%E4%BD%95%E5%9C%A8canvas%E5%86%85%E9%83%A8%E5%85%83%E7%B4%A0%E4%B8%8A%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&text=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&is_video=false&description=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=二维矩阵变换&body=Check out this article: https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&name=二维矩阵变换&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&t=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数学中的矩阵计算"><span class="toc-number">1.</span> <span class="toc-text">数学中的矩阵计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次坐标"><span class="toc-number">2.</span> <span class="toc-text">齐次坐标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平移"><span class="toc-number">3.</span> <span class="toc-text">平移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缩放"><span class="toc-number">4.</span> <span class="toc-text">缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转"><span class="toc-number">5.</span> <span class="toc-text">旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">6.</span> <span class="toc-text">变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        二维矩阵变换
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">wstreet</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-17T22:36:08.000Z" itemprop="datePublished">2020-06-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/canvas/">canvas</a> › <a class="category-link" href="/categories/canvas/svg/">svg</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/canvas/" rel="tag">canvas</a>, <a class="tag-link" href="/tags/svg/" rel="tag">svg</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>矩阵变换是一种线性变换，线段变换后仍是线段，并且原点不会改变<br /></p>
+<p><a name="y6dvY"></a></p>
+<h2 id="数学中的矩阵计算"><a href="#数学中的矩阵计算" class="headerlink" title="数学中的矩阵计算"></a>数学中的矩阵计算</h2><p>矩阵计算包括加法、减法、乘法、共轭、转置等，在平面图形中主要介绍点乘。矩阵的乘法满足以下运算律：<br /><br><br /><strong>结合律：</strong><br /><img src="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884960-a840a57a-73ca-40bf-a567-c1ea5ae7f783.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=162&amp;size=0&amp;status=done&amp;style=none&amp;width=162" alt=""><br /><strong>左分配律：</strong><br /><img src="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884879-6da84ab5-f4a7-4f57-8eae-00ab72d19772.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=206&amp;size=0&amp;status=done&amp;style=none&amp;width=206" alt=""><br /><strong>右分配律：</strong><br /><img src="https://cdn.nlark.com/yuque/0/2020/svg/211977/1592321884926-98556cb0-0455-4ec6-9ed5-59753fec2d71.svg#align=left&amp;display=inline&amp;height=24&amp;margin=%5Bobject%20Object%5D&amp;originHeight=24&amp;originWidth=206&amp;size=0&amp;status=done&amp;style=none&amp;width=206" alt=""><br /></p>
+<p><a name="b07Dp"></a></p>
+<h2 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h2><p>齐次坐标使用(x, y, w)描述，等价与二维坐标(x/w, y/w)，如果w = 1，就可以当二维坐标使用，w的值必须大于等于0。如果w趋近于0，那么它表示的点将趋近无穷远，所以在齐次坐标系中可以有无穷的概念，齐次坐标的存在，使得用矩阵乘法来描述顶点变换成为可能。</p>
+<blockquote>
+<p>来源于WebGL编程指南</p>
+</blockquote>
+<p><a name="OROO1"></a></p>
+<h2 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h2><p>对于一点V(x, y)在平面上向x方向平移dx，向y方向平移dy，如果矩阵的加法表示：<br />V = <img src="https://cdn.nlark.com/yuque/__latex/143ff58166d34dc70012218424c1617f.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C%20%5Cend%7Bbmatrix%7D&amp;height=45&amp;width=32" alt="">,   M = <img src="https://cdn.nlark.com/yuque/__latex/f3aa3922109adeaa4c86eea720e01d2b.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Ddx%5C%5Cdy%5C%5C%20%5Cend%7Bbmatrix%7D&amp;height=45&amp;width=41" alt=""><br />则平移后V’ = V + M = <img src="https://cdn.nlark.com/yuque/__latex/5c6021e16849740ec8b90d658557f07b.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%20%2B%20dx%5C%5Cy%2Bdy%5C%5C%20%5Cend%7Bbmatrix%7D&amp;height=45&amp;width=71" alt="">,对应点V’(x+dx, y+dy)</p>
+<p>如果用点乘表示则：</p>
+<p>V = <img src="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37" alt="">,   M = <img src="https://cdn.nlark.com/yuque/__latex/ea60306c89932a5916d857fa38649630.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D1%260%26dx%20%5C%5C0%261%26dy%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=96" alt=""><br />点V经过矩阵M变换后表示：<br />V’ = M·V = <img src="https://cdn.nlark.com/yuque/__latex/ea60306c89932a5916d857fa38649630.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D1%260%26dx%20%5C%5C0%261%26dy%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=96" alt="">·<img src="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37" alt=""> = <img src="https://cdn.nlark.com/yuque/__latex/fbe884ed0dbae4948e1a6f6ab0f32167.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%20%2B%20dx%5C%5Cy%20%2B%20dy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=76" alt="">，所以变换后的点V’(x+dx, y+dy)</p>
+<p><a name="9xvzt"></a></p>
+<h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><p>直线的缩放是点的缩放，假如有点V(x, y)，经过缩放矩阵M = <img src="https://cdn.nlark.com/yuque/__latex/37a96752e7f549b76f31c348ad89e3d0.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%260%260%20%5C%5C0%26sy%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=103" alt="">变换，则得到点V’<br />V’ = M ·V = <img src="https://cdn.nlark.com/yuque/__latex/37a96752e7f549b76f31c348ad89e3d0.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%260%260%20%5C%5C0%26sy%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=103" alt="">·<img src="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37" alt=""> = <img src="https://cdn.nlark.com/yuque/__latex/e5fe799973d046b5c28e3fa49ea3109d.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%2Ax%20%5C%5Csy%2Ay%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=70" alt="">,得到点V’(sx<em>x, sy</em>y)</p>
+<p><a name="E8hc7"></a></p>
+<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/211977/1592323489719-6f865b7a-4492-43b5-b271-3ba2ce59c79e.png#align=left&amp;display=inline&amp;height=267&amp;margin=%5Bobject%20Object%5D&amp;name=71080-20171116101008734-1171446672.png&amp;originHeight=267&amp;originWidth=273&amp;size=18308&amp;status=done&amp;style=none&amp;width=273" alt="71080-20171116101008734-1171446672.png"></p>
+<p>旋转是基于原点的旋转，假如有点V(x, y)，经过旋转矩阵M = <img src="https://cdn.nlark.com/yuque/__latex/b4829dedb886227240900e48329e560a.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dcos%CE%B8%26-sin%CE%B8%260%20%5C%5Csin%CE%B8%26cos%CE%B8%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=66&amp;width=146" alt="">变换后，得到点V’<br />V’ = M·V = <img src="https://cdn.nlark.com/yuque/__latex/b4829dedb886227240900e48329e560a.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dcos%CE%B8%26-sin%CE%B8%260%20%5C%5Csin%CE%B8%26cos%CE%B8%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=66&amp;width=146" alt="">·<img src="https://cdn.nlark.com/yuque/__latex/44b5000221fa826174e77b53e124eafc.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%5C%5Cy%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=37" alt=""> = <img src="https://cdn.nlark.com/yuque/__latex/ec8e0071191b7f871f80280ae5a1758f.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dx%2Acos%CE%B8%20-%20y%2Asin%CE%B8%5C%5Cx%2Asin%CE%B8%2Bycos%CE%B8%5C%5C1%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=160" alt="">,得到点V’(x<em>cosθ - y</em>sinθ, x*sinθ+ycosθ)</p>
+<p><a name="nWLbT"></a></p>
+<h2 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h2><p>可以将以上三种矩阵合在一起对平面图形进行矩阵变换，M = <img src="https://cdn.nlark.com/yuque/__latex/4a2e3046790d79d12b2170447ebd48a3.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D%0A%20a%20%26%20c%20%26%20e%20%5C%5C%0A%20b%20%26%20d%20%26%20f%20%5C%5C%0A%200%20%26%200%20%26%201%20%20%0A%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=88" alt="">。<br />a (<em>m11</em>)：水平方向的缩放<br />b (<em>m12</em>)：水平方向的倾斜偏移<br />c (<em>m21</em>)：竖直方向的倾斜偏移<br />d (<em>m22</em>)：竖直方向的缩放<br />e (_dx_)：水平方向的移动<br />f (_dy_)：竖直方向的移动</p>
+<p><a name="gyoR8"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>平移矩阵：M = <img src="https://cdn.nlark.com/yuque/__latex/ea60306c89932a5916d857fa38649630.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7D1%260%26dx%20%5C%5C0%261%26dy%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=96" alt=""><br />缩放矩阵：M = <img src="https://cdn.nlark.com/yuque/__latex/37a96752e7f549b76f31c348ad89e3d0.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dsx%260%260%20%5C%5C0%26sy%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=69&amp;width=103" alt=""><br />旋转矩阵：M = <img src="https://cdn.nlark.com/yuque/__latex/b4829dedb886227240900e48329e560a.svg#card=math&amp;code=%5Cbegin%7Bbmatrix%7Dcos%CE%B8%26-sin%CE%B8%260%20%5C%5Csin%CE%B8%26cos%CE%B8%260%5C%5C0%260%261%20%5Cend%7Bbmatrix%7D&amp;height=66&amp;width=146" alt=""><br /><br><br /></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数学中的矩阵计算"><span class="toc-number">1.</span> <span class="toc-text">数学中的矩阵计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次坐标"><span class="toc-number">2.</span> <span class="toc-text">齐次坐标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平移"><span class="toc-number">3.</span> <span class="toc-text">平移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缩放"><span class="toc-number">4.</span> <span class="toc-text">缩放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转"><span class="toc-number">5.</span> <span class="toc-text">旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">6.</span> <span class="toc-text">变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&text=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&is_video=false&description=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=二维矩阵变换&body=Check out this article: https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&title=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&name=二维矩阵变换&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/&t=二维矩阵变换" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

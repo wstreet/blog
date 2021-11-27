@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="基本形状元素基本形状元素允许的内容物：任意数量、任意排序的动画元素、描述性元素circle: svg元素，是一个svg的基本形状，用来创建一个圆，指定圆心和半径允许的内容物：任意数量和任意排序的动画元素、描述性元素属性：cx，cy，r，cx和cy指定圆心，r指定半径例子：12345&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;&lt;svg viewBox&#x3D;&quot;0 0 120 120&quot; ve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="svg基本形状元素">
+<meta property="og:url" content="https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="基本形状元素基本形状元素允许的内容物：任意数量、任意排序的动画元素、描述性元素circle: svg元素，是一个svg的基本形状，用来创建一个圆，指定圆心和半径允许的内容物：任意数量和任意排序的动画元素、描述性元素属性：cx，cy，r，cx和cy指定圆心，r指定半径例子：12345&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;&lt;svg viewBox&#x3D;&quot;0 0 120 120&quot; ve">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-07T10:07:03.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta property="article:tag" content="SVG">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>svg基本形状元素</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2020/05/16/Promise%E5%AE%9E%E7%8E%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2020/03/28/%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&text=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&is_video=false&description=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=svg基本形状元素&body=Check out this article: https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&name=svg基本形状元素&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&t=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本形状元素"><span class="toc-number">1.</span> <span class="toc-text">基本形状元素</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        svg基本形状元素
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">wstreet</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-05-07T10:07:03.000Z" itemprop="datePublished">2020-05-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/SVG/">SVG</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/SVG/" rel="tag">SVG</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="基本形状元素"><a href="#基本形状元素" class="headerlink" title="基本形状元素"></a>基本形状元素</h1><p>基本形状元素允许的内容物：任意数量、任意排序的动画元素、描述性元素<br /><br><br /><code>circle</code>: svg元素，是一个svg的基本形状，用来创建一个圆，指定圆心和半径<br />允许的内容物：任意数量和任意排序的动画元素、描述性元素<br />属性：cx，cy，r，cx和cy指定圆心，r指定半径<br />例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">viewBox</span>=<span class="string">"0 0 120 120"</span> <span class="attr">version</span>=<span class="string">"1.1"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">"60"</span> <span class="attr">cy</span>=<span class="string">"60"</span> <span class="attr">r</span>=<span class="string">"50"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>viewBox的四个参数分别代表：最小X轴数值；最小y轴数值；宽度；高度。</p>
+</blockquote>
+<p> <code>ellipse</code>：svg基本形状，创建一个椭圆，基于一个中心坐标，以及x半径和y半径<br />允许的内容物：任意数量和任意排序的动画元素、描述性元素<br />属性：cx，cy，rx，ry<br />例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">width</span>=<span class="string">"120"</span> </span></span><br><span class="line"><span class="tag">     <span class="attr">height</span>=<span class="string">"120"</span> <span class="attr">viewPort</span>=<span class="string">"0 0 120 120"</span> <span class="attr">version</span>=<span class="string">"1.1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ellipse</span> <span class="attr">cx</span>=<span class="string">"60"</span> <span class="attr">cy</span>=<span class="string">"60"</span> <span class="attr">rx</span>=<span class="string">"50"</span> <span class="attr">ry</span>=<span class="string">"25"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><br /><code>line</code>元素是一个SVG基本形状，用来创建一条连接两个点的线。<br />属性：x1,x2,y1,y2<br />例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">line</span> <span class="attr">x1</span>=<span class="string">"20"</span> <span class="attr">y1</span>=<span class="string">"100"</span> <span class="attr">x2</span>=<span class="string">"100"</span> <span class="attr">y2</span>=<span class="string">"100"</span> <span class="attr">stroke-width</span>=<span class="string">"2"</span> <span class="attr">stroke</span>=<span class="string">"black"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>stroke-width：线，文本或元素轮廓厚度，stroke：线，文本或元素轮廓颜色</p>
+</blockquote>
+<p><br /><code>polygon</code> :元素定义了一个由一组首尾相连的直线线段构成的闭合多边形形状。最后一点连接到第一点。<br />属性：point<br />例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">width</span>=<span class="string">"120"</span> <span class="attr">height</span>=<span class="string">"120"</span> </span></span><br><span class="line"><span class="tag">     <span class="attr">viewPort</span>=<span class="string">"0 0 120 120"</span> <span class="attr">version</span>=<span class="string">"1.1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">polygon</span> <span class="attr">points</span>=<span class="string">"60,20 100,40 100,80 60,100 20,80 20,40"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><br /><code>polyline</code> :创建一系列直线连接多个点，一个非闭合（最后一点不与第一点相连）的形状<br />属性：point<br />例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">width</span>=<span class="string">"120"</span> <span class="attr">height</span>=<span class="string">"120"</span> </span></span><br><span class="line"><span class="tag">     <span class="attr">viewPort</span>=<span class="string">"0 0 120 120"</span> <span class="attr">version</span>=<span class="string">"1.1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">polyline</span> <span class="attr">fill</span>=<span class="string">"none"</span> <span class="attr">stroke</span>=<span class="string">"black"</span> <span class="attr">points</span>=<span class="string">"20,100 40,60 70,80 100,20"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><br /><code>rect</code> :用来创建一个矩形，基于一个角位置以及它的宽和高。它还可以用来创建圆角矩形。<br />属性：x, y, width, height, rx, ry<br />例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 简单矩形</span><br><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">"120"</span> <span class="attr">height</span>=<span class="string">"120"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">viewBox</span>=<span class="string">"0 0 120 120"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"10"</span> <span class="attr">y</span>=<span class="string">"10"</span> <span class="attr">width</span>=<span class="string">"100"</span> <span class="attr">height</span>=<span class="string">"100"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 圆角矩形</span><br><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">"120"</span> <span class="attr">height</span>=<span class="string">"120"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">viewBox</span>=<span class="string">"0 0 120 120"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"10"</span> <span class="attr">y</span>=<span class="string">"10"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">"100"</span> <span class="attr">height</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">rx</span>=<span class="string">"15"</span> <span class="attr">ry</span>=<span class="string">""</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本形状元素"><span class="toc-number">1.</span> <span class="toc-text">基本形状元素</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&text=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&is_video=false&description=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=svg基本形状元素&body=Check out this article: https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&title=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&name=svg基本形状元素&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/05/07/svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6%E5%85%83%E7%B4%A0/&t=svg基本形状元素" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

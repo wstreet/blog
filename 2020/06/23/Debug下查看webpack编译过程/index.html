@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="我们知道在浏览器的source面板中可以进行断点调试，但是webpack编译过程是在Nodejs环境中进行的，怎么才能打断点查看编译过程呢？vscode提供了断点调试功能，包括Chrome和Nodejs，下面介绍一下怎么去配置1、首先用vscode打开你要调试的项目2、键盘F5键或者点击菜单（Run-&gt;Start Debugging），会出现下图然后点击创建一个launch.js文件，内容如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debug下查看webpack编译过程">
+<meta property="og:url" content="https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="我们知道在浏览器的source面板中可以进行断点调试，但是webpack编译过程是在Nodejs环境中进行的，怎么才能打断点查看编译过程呢？vscode提供了断点调试功能，包括Chrome和Nodejs，下面介绍一下怎么去配置1、首先用vscode打开你要调试的项目2、键盘F5键或者点击菜单（Run-&gt;Start Debugging），会出现下图然后点击创建一个launch.js文件，内容如">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/211977/1591275442418-1dc8ea4a-493b-4c08-ab6b-b4ad1966cddc.png#align=left&amp;display=inline&amp;height=188&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=376&amp;originWidth=508&amp;size=25660&amp;status=done&amp;style=none&amp;width=254">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/211977/1591276773092-bbe6bda2-491c-4db8-bff0-a8799e2e6371.png#align=left&amp;display=inline&amp;height=422&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=843&amp;originWidth=1259&amp;size=190426&amp;status=done&amp;style=none&amp;width=629.5">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/211977/1591276862852-b9dd8b5f-bcad-4fba-ac09-c7ce6ee27d21.png#align=left&amp;display=inline&amp;height=44&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=87&amp;originWidth=339&amp;size=5696&amp;status=done&amp;style=none&amp;width=169.5">
+<meta property="article:published_time" content="2020-06-23T23:08:29.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/png/211977/1591275442418-1dc8ea4a-493b-4c08-ab6b-b4ad1966cddc.png#align=left&amp;display=inline&amp;height=188&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=376&amp;originWidth=508&amp;size=25660&amp;status=done&amp;style=none&amp;width=254">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Debug下查看webpack编译过程</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2020/07/07/canvas%E5%AE%9E%E6%88%98%E4%BB%AA%E8%A1%A8%E7%9B%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2020/06/17/%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&text=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&is_video=false&description=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Debug下查看webpack编译过程&body=Check out this article: https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&name=Debug下查看webpack编译过程&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&t=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Debug下查看webpack编译过程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">wstreet</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-23T23:08:29.000Z" itemprop="datePublished">2020-06-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/webpack/">webpack</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/webpack/" rel="tag">webpack</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>我们知道在浏览器的source面板中可以进行断点调试，但是webpack编译过程是在Nodejs环境中进行的，怎么才能打断点查看编译过程呢？<br /><br><br />vscode提供了断点调试功能，包括Chrome和Nodejs，下面介绍一下怎么去配置<br />1、首先用vscode打开你要调试的项目<br />2、键盘F5键或者点击菜单（Run-&gt;Start Debugging），会出现下图<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/211977/1591275442418-1dc8ea4a-493b-4c08-ab6b-b4ad1966cddc.png#align=left&amp;display=inline&amp;height=188&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=376&amp;originWidth=508&amp;size=25660&amp;status=done&amp;style=none&amp;width=254" alt="image.png"><br />然后点击创建一个launch.js文件，内容如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"node"</span>, <span class="comment">// node环境</span></span><br><span class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">            <span class="attr">"skipFiles"</span>: [</span><br><span class="line">                <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\index.js"</span> <span class="comment">// 开始执行的文件</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>然后检查type对应的环境和program对应的开始执行文件，在你的index.js文件相应的位置打上debugger，再次按F5，就会从index.js开始执行到debugger的地方<br /><br><br />下面用webpack编译举个例子<br />1、创建一个文件夹 <code>webpack-debug</code> ,    运行 <code>npm init -y</code> ,然后 <code>npm i webpack -D</code> <br />2、在根目录下创建一个app.js文件，简单添加点内容<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="string">'app'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> app</span><br></pre></td></tr></table></figure></p>
+<p><br />3、配置webpack.config.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">'none'</span>,</span><br><span class="line">    entry: <span class="string">'./app.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].js'</span>,</span><br><span class="line">        path: __dirname + <span class="string">'/lib'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>4、添加启动脚本文件start.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./webpack.config'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">debugger</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> compiler = webpack(config)</span><br><span class="line"></span><br><span class="line"><span class="keyword">debugger</span></span><br><span class="line"></span><br><span class="line">compiler.run(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><br>5、根据前面介绍的添加launch.json文件<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">    <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">    <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">            <span class="attr">"skipFiles"</span>: [</span><br><span class="line">                <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\start.js"</span> <span class="comment">// 从start.js开始启动</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>6、F5进行调试<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/211977/1591276773092-bbe6bda2-491c-4db8-bff0-a8799e2e6371.png#align=left&amp;display=inline&amp;height=422&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=843&amp;originWidth=1259&amp;size=190426&amp;status=done&amp;style=none&amp;width=629.5" alt="image.png"><br /><br><br />可以使用step into <img src="https://cdn.nlark.com/yuque/0/2020/png/211977/1591276862852-b9dd8b5f-bcad-4fba-ac09-c7ce6ee27d21.png#align=left&amp;display=inline&amp;height=44&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=87&amp;originWidth=339&amp;size=5696&amp;status=done&amp;style=none&amp;width=169.5" alt="image.png">查看每一步调用</p>
+<p>本节代码：<a href="https://github.com/wstreet/webpack-debug" target="_blank" rel="noopener">链接</a></p>
+<p>webpack基本原理可查看这篇：<a href="https://www.yuque.com/streetex/msp6tb/dgx90d" target="_blank" rel="noopener">webpack基本原理</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&text=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&is_video=false&description=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Debug下查看webpack编译过程&body=Check out this article: https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&title=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&name=Debug下查看webpack编译过程&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2020/06/23/Debug%E4%B8%8B%E6%9F%A5%E7%9C%8Bwebpack%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/&t=Debug下查看webpack编译过程" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

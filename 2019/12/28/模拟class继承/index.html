@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="在模拟实现class继承之前，如果还不熟悉JavaScript的继承，可以看一下这篇文章JavaScript继承首先看一下ES6的继承1234567891011121314151617181920&#x2F;&#x2F; ES6继承class Animal &amp;#123;  static footer &#x3D; &#39;footer&#39;  constructor(opt) &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模拟class继承">
+<meta property="og:url" content="https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="在模拟实现class继承之前，如果还不熟悉JavaScript的继承，可以看一下这篇文章JavaScript继承首先看一下ES6的继承1234567891011121314151617181920&#x2F;&#x2F; ES6继承class Animal &amp;#123;  static footer &#x3D; &#39;footer&#39;  constructor(opt) &amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/211977/1577524705049-4c0a8f74-23de-4670-89e3-95639def1ac0.png">
+<meta property="article:published_time" content="2019-12-28T17:39:53.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/211977/1577524705049-4c0a8f74-23de-4670-89e3-95639def1ac0.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>模拟class继承</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2020/01/02/new%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2019/12/22/JavaScript%E7%BB%A7%E6%89%BF/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&text=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&is_video=false&description=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=模拟class继承&body=Check out this article: https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&name=模拟class继承&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&t=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        模拟class继承
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">wstreet</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-28T17:39:53.000Z" itemprop="datePublished">2019-12-28</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript%E8%BF%9B%E9%98%B6/">JavaScript进阶</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>在模拟实现class继承之前，如果还不熟悉JavaScript的继承，可以看一下这篇文章JavaScript继承<br>首先看一下ES6的继承<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES6继承</span><br><span class="line">class Animal &#123;</span><br><span class="line">  static footer &#x3D; &#39;footer&#39;</span><br><span class="line">  constructor(opt) &#123;</span><br><span class="line">    this.name &#x3D; opt.name</span><br><span class="line">  &#125;</span><br><span class="line">  getName() &#123;</span><br><span class="line">    return this.name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Cat extends Animal &#123;</span><br><span class="line">  constructor(opt) &#123;</span><br><span class="line">    super(opt)</span><br><span class="line">    this.age &#x3D; opt.age</span><br><span class="line">  &#125;</span><br><span class="line">  getAge() &#123;</span><br><span class="line">    return this.age</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const cat &#x3D; new Cat(&#123; name: &#39;miao&#39;, age: 5 &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>在上面代码中，Cat继承Animal，通过使用extends继承Animal原型上的方法，通过super调用父构造函数</p>
+<blockquote>
+<p>关于super：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/super" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/super</a></p>
+</blockquote>
+<blockquote>
+<p>super([arguments]);<br>// 调用 父对象/父类 的构造函数</p>
+</blockquote>
+<blockquote>
+<p>super.functionOnParent([arguments]);<br>// 调用 父对象/父类 上的方法</p>
+</blockquote>
+<p>我们要想模拟实现ES6继承，关键看ES6 class extends最终转成ES6是什么样，这里急用Babel工具：在线转换，<br>摘出最主要的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">function _inherits(subClass, superClass) &#123;</span><br><span class="line">  if (typeof superClass !&#x3D;&#x3D; &quot;function&quot; &amp;&amp; superClass !&#x3D;&#x3D; null) &#123;</span><br><span class="line">    throw new TypeError(&quot;Super expression must either be null or a function&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  subClass.prototype &#x3D; Object.create(superClass &amp;&amp; superClass.prototype, &#123;</span><br><span class="line">    constructor: &#123; value: subClass, writable: true, configurable: true &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  if (superClass) _setPrototypeOf(subClass, superClass);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; ES6继承</span><br><span class="line">var Animal &#x3D;</span><br><span class="line">  &#x2F;*#__PURE__*&#x2F;</span><br><span class="line">  (function() &#123;</span><br><span class="line">    function Animal(opt) &#123;</span><br><span class="line">      _classCallCheck(this, Animal);</span><br><span class="line">      this.name &#x3D; opt.name;</span><br><span class="line">    &#125;</span><br><span class="line">    _createClass(Animal, [</span><br><span class="line">      &#123;</span><br><span class="line">        key: &quot;getName&quot;,</span><br><span class="line">        value: function getName() &#123;</span><br><span class="line">          return this.name;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]);</span><br><span class="line">    return Animal;</span><br><span class="line">  &#125;)();</span><br><span class="line">_defineProperty(Animal, &quot;footer&quot;, &quot;footer&quot;);</span><br><span class="line">var Cat &#x3D;</span><br><span class="line">  &#x2F;*#__PURE__*&#x2F;</span><br><span class="line">  (function(_Animal) &#123;</span><br><span class="line">    _inherits(Cat, _Animal);</span><br><span class="line">    function Cat(opt) &#123;</span><br><span class="line">      var _this;</span><br><span class="line">      _classCallCheck(this, Cat);</span><br><span class="line">      _this &#x3D; _possibleConstructorReturn(</span><br><span class="line">        this,</span><br><span class="line">        _getPrototypeOf(Cat).call(this, opt)</span><br><span class="line">      );</span><br><span class="line">      _this.age &#x3D; opt.age;</span><br><span class="line">      return _this;</span><br><span class="line">    &#125;</span><br><span class="line">    _createClass(Cat, [</span><br><span class="line">      &#123;</span><br><span class="line">        key: &quot;getAge&quot;,</span><br><span class="line">        value: function getAge() &#123;</span><br><span class="line">          return this.age;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]);</span><br><span class="line">    return Cat;</span><br><span class="line">  &#125;)(Animal);</span><br><span class="line">var cat &#x3D; new Cat(&#123;</span><br><span class="line">  name: &quot;miao&quot;,</span><br><span class="line">  age: 5</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>其中最主要的是 _inherits(Cat, _Animal); 和 _getPrototypeOf(Cat).call(this, opt) ，看到这里我们发现有点像寄生组合式继承。别急，还有跟他不一样的地方.</p>
+<p>我们运行转换后的代码，看一下Cat.<strong>proto</strong><br><img src="https://cdn.nlark.com/yuque/0/2019/png/211977/1577524705049-4c0a8f74-23de-4670-89e3-95639def1ac0.png" alt=""></p>
+<p>发现Cat.<strong>proto</strong>是指向Animal的，在转换后的代码中也能找到对应的地方，就是在_inherits函数最后一句</p>
+<p>所以es6 class的继承实现就是在寄生组合式继承的基础上将子类的<strong>proto</strong>属性指向父类，为什么要这样做？</p>
+<p>因为寄生组合式继承没法继承父类的静态方法</p>
+<p> 模拟实现：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">function inherit(Sub, Sup) &#123;</span><br><span class="line">  &#x2F;&#x2F; Object.create和原型式继承一样，返回一个参数对象的副本</span><br><span class="line">  &#x2F;&#x2F; 寄生式继承+原型链继承</span><br><span class="line">  const prototype &#x3D; Object.create(Sup.prototype)</span><br><span class="line">  </span><br><span class="line">  Sub.prototype &#x3D; prototype   &#x2F;&#x2F; 改变子类构造函数的prototype</span><br><span class="line">  Sub.prototype.constructor &#x3D; Sub</span><br><span class="line">  </span><br><span class="line">  Sub.__proto__ &#x3D; Sup</span><br><span class="line">&#125;</span><br><span class="line">function SupType(name) &#123;</span><br><span class="line">  this.name &#x3D; name</span><br><span class="line">  this.colors &#x3D; [&#39;red&#39;]</span><br><span class="line">&#125;</span><br><span class="line">SupType.prototype.getName &#x3D; function()&#123;</span><br><span class="line">  return this.name</span><br><span class="line">&#125;;</span><br><span class="line">function SubType(name,age) &#123;</span><br><span class="line">  this.age &#x3D; age</span><br><span class="line">  &#x2F;&#x2F; 构造函数继承</span><br><span class="line">  SupType.call(this, name)</span><br><span class="line">&#125;</span><br><span class="line">inherit(SubType, SupType)</span><br><span class="line">SubType.prototype.getAge &#x3D; function() &#123;</span><br><span class="line">  return this.age</span><br><span class="line">&#125;</span><br><span class="line">const sub &#x3D; new SubType(&#39;streetex&#39;, 25)</span><br></pre></td></tr></table></figure></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&text=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&is_video=false&description=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=模拟class继承&body=Check out this article: https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&title=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&name=模拟class继承&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://wstreet.github.io/blog/2019/12/28/%E6%A8%A1%E6%8B%9Fclass%E7%BB%A7%E6%89%BF/&t=模拟class继承" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

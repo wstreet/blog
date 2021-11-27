@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="坚持每天写自己的代码  毕业至此已经工作了近一年了，如果算上实习阶段，已经超过一年了，当年也是因为喜欢编程才半路出家，从物理转为前端，但其实那条路都是保不住头发的，索性就不用去管它了。我相信任何一个做技术的人都有一个当大佬的梦想，想接触更多比自己优秀的人，但前提是自己足够努力，能够够得到大佬，才能包住大腿啊。 工作这么久自己的水平一直没有怎么提升，平时的开发都是基于框架的API进行开发，对于底层">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Javascript进阶系列">
+<meta property="og:url" content="https://wstreet.github.io/blog/javascript-pro/index.html">
+<meta property="og:site_name" content="步行街的Blog">
+<meta property="og:description" content="坚持每天写自己的代码  毕业至此已经工作了近一年了，如果算上实习阶段，已经超过一年了，当年也是因为喜欢编程才半路出家，从物理转为前端，但其实那条路都是保不住头发的，索性就不用去管它了。我相信任何一个做技术的人都有一个当大佬的梦想，想接触更多比自己优秀的人，但前提是自己足够努力，能够够得到大佬，才能包住大腿啊。 工作这么久自己的水平一直没有怎么提升，平时的开发都是基于框架的API进行开发，对于底层">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-21T00:56:23.000Z">
+<meta property="article:modified_time" content="2021-11-27T07:34:45.359Z">
+<meta property="article:author" content="wstreet">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Javascript进阶系列</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4">
+        
+          <header id="header">
+  <a href="/">
+  
+    
+      <div id="logo" style="background-image: url(/images/logo.png);"></div>
+    
+  
+    <div id="title">
+      <h1>步行街的Blog</h1>
+    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+      <!--
+     --><li><a href="/">首页</a></li><!--
+   --><!--
+     --><li><a href="/about/">关于</a></li><!--
+   --><!--
+     --><li><a href="/archives/">归档</a></li><!--
+   --><!--
+     --><li><a href="/projects_url">项目</a></li><!--
+   -->
+    </ul>
+  </div>
+</header>
+
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+
+  <div class="content" itemprop="articleBody">
+      
+          <blockquote>
+<p>坚持每天写自己的代码</p>
+</blockquote>
+<p>毕业至此已经工作了近一年了，如果算上实习阶段，已经超过一年了，当年也是因为喜欢编程才半路出家，从物理转为前端，但其实那条路都是保不住头发的，索性就不用去管它了。我相信任何一个做技术的人都有一个当大佬的梦想，想接触更多比自己优秀的人，但前提是自己足够努力，能够够得到大佬，才能包住大腿啊。</p>
+<p>工作这么久自己的水平一直没有怎么提升，平时的开发都是基于框架的API进行开发，对于底层的基础没有完全的掌握，最近也是基于一些其他的原因决定静下心来学习js基础知识。</p>
+<p>认识到基础的重要性，平时摆出各种姿势仰望大佬，各种框架各种技术频频冒出，自己也会去看一些源码学习，说实话，基础掌握不好真的很难读懂。要知道万变不离其宗，任何框架底层都是用最原生的js去写的，只有打好了基础才能学起来更轻松，所以就有了以下一系列文章。</p>
+<p>列表（先列出计划表，慢慢完善）</p>
+<ol>
+<li><strong><a href="https://wstreet.github.io/blog/2019/04/22/javaScriptEngine_context_callStack">v8、执行上下文和调用堆栈的关系</a></strong></li>
+<li><strong>原始类型</strong></li>
+<li><strong>值类型和引用类型</strong></li>
+<li><strong>隐式, 显式, 名义和鸭子类型</strong></li>
+<li><strong>== 与 ===, typeof 与 instanceof</strong></li>
+<li><strong><a href="https://wstreet.github.io/blog/2019/04/01/call_apply_bind_simulation">call、apply和bind的模拟实现</a></strong></li>
+<li><strong>new的模拟实现</strong></li>
+<li><strong>函数作用域, 块级作用域和词法作用域</strong></li>
+<li><strong>闭包</strong></li>
+<li><strong>map, reduce, filter 等高阶函数</strong></li>
+<li><strong>表达式和语句</strong></li>
+<li><strong>变量提升</strong></li>
+<li><strong>立即执行函数, 模块化, 命名空间</strong></li>
+<li><strong>递归</strong></li>
+<li><strong>类数组对象与arguments</strong></li>
+<li><strong>对象的多种方式以及优缺点</strong></li>
+<li><strong>继承的多种方式和优缺点</strong></li>
+<li><strong>消息队列和事件循环</strong></li>
+<li><strong>setTimeout, setInterval 和 requestAnimationFrame</strong></li>
+<li><strong>Promise</strong></li>
+<li><strong>DOM 树和渲染过程</strong></li>
+<li><strong>new 与构造函数, instanceof 与实例</strong></li>
+<li><strong><a href="">JavaScript继承</a></strong></li>
+<li><strong>Object.create 和 Object.assign</strong></li>
+<li><strong>工厂函数和类</strong></li>
+<li><strong>设计模式</strong></li>
+<li><strong>纯函数, 函数副作用和状态变化</strong></li>
+<li><strong>耗性能操作和时间复杂度</strong></li>
+<li><strong>JavaScript 引擎</strong></li>
+<li><strong>偏函数, 柯里化, Compose 和 Pipe</strong></li>
+</ol>
+
+        
+  </div>
+</article>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    wstreet
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
